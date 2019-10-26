@@ -7,3 +7,4 @@ it(`should match snapshot`, () => {
 
   expect(mainPage).toMatchSnapshot();
 });
+
