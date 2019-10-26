@@ -355,7 +355,7 @@ Array [
                     <a
                       href="#"
                     >
-                      Beautiful & luxurious apartment at great location
+                      1
                     </a>
                   </h2>
                   <p
@@ -449,7 +449,7 @@ Array [
                     <a
                       href="#"
                     >
-                      Wood and stone place
+                      2
                     </a>
                   </h2>
                   <p
@@ -543,7 +543,7 @@ Array [
                     <a
                       href="#"
                     >
-                      Canal View Prinsengracht
+                      3
                     </a>
                   </h2>
                   <p
@@ -643,9 +643,7 @@ Array [
                   >
                     <a
                       href="#"
-                    >
-                      Nice, cozy, warm big bed apartment
-                    </a>
+                    />
                   </h2>
                   <p
                     className="place-card__type"
@@ -738,7 +736,7 @@ Array [
                     <a
                       href="#"
                     >
-                      Wood and stone place
+                      1
                     </a>
                   </h2>
                   <p

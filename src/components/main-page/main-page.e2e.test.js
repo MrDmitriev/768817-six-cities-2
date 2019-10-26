@@ -7,7 +7,7 @@ Enzyme.configure({adapter: new Adapter()});
 
 it(`simulate click event for 1st button`, () => {
   const clickHandler = jest.fn();
-  const wrapper = shallow(<MainPage onButtonClickHanler={clickHandler} />);
+  const wrapper = shallow(<MainPage onButtonClickHanler={clickHandler} appartments={[1, 2, 3]} />);
 
   wrapper.find(`button`).first().simulate(`click`);
 
