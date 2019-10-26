@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const MainPage = (props) => {
-  const {onButtonClickHanler} = props;
+  const {appartments, onButtonClickHanler} = props;
+
   return (
         <>
             <div style={{display: `none`}}>
@@ -133,7 +134,7 @@ export const MainPage = (props) => {
                                   </div>
                                 </div>
                                 <h2 className="place-card__name">
-                                  <a href="#">Beautiful &amp; luxurious apartment at great location</a>
+                                  <a href="#">{appartments[0]}</a>
                                 </h2>
                                 <p className="place-card__type">Apartment</p>
                               </div>
@@ -165,7 +166,7 @@ export const MainPage = (props) => {
                                   </div>
                                 </div>
                                 <h2 className="place-card__name">
-                                  <a href="#">Wood and stone place</a>
+                                  <a href="#">{appartments[1]}</a>
                                 </h2>
                                 <p className="place-card__type">Private room</p>
                               </div>
@@ -197,7 +198,7 @@ export const MainPage = (props) => {
                                   </div>
                                 </div>
                                 <h2 className="place-card__name">
-                                  <a href="#">Canal View Prinsengracht</a>
+                                  <a href="#">{appartments[2]}</a>
                                 </h2>
                                 <p className="place-card__type">Apartment</p>
                               </div>
@@ -232,7 +233,7 @@ export const MainPage = (props) => {
                                   </div>
                                 </div>
                                 <h2 className="place-card__name">
-                                  <a href="#">Nice, cozy, warm big bed apartment</a>
+                                  <a href="#">{appartments[3]}</a>
                                 </h2>
                                 <p className="place-card__type">Apartment</p>
                               </div>
@@ -264,7 +265,7 @@ export const MainPage = (props) => {
                                   </div>
                                 </div>
                                 <h2 className="place-card__name">
-                                  <a href="#">Wood and stone place</a>
+                                  <a href="#">{appartments[0]}</a>
                                 </h2>
                                 <p className="place-card__type">Private room</p>
                               </div>
@@ -283,5 +284,6 @@ export const MainPage = (props) => {
 };
 
 MainPage.propTypes = {
+  appartments: PropTypes.array,
   onButtonClickHanler: PropTypes.func,
 };
