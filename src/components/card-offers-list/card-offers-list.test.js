@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {App} from './app.jsx';
+import {CardOffersList} from './card-offers-list.jsx';
 
 it(`should match snapshot`, () => {
   const offers = [{
@@ -9,7 +9,8 @@ it(`should match snapshot`, () => {
     type: `AAA`,
     src: `AAA`,
   }];
-  const app = renderer.create(<App offers={offers} />).toJSON();
 
-  expect(app).toMatchSnapshot();
+  const wrapper = renderer.create(<CardOffersList offers={offers} />).toJSON();
+
+  expect(wrapper).toMatchSnapshot();
 });

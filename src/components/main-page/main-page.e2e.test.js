@@ -5,11 +5,14 @@ import {MainPage} from './main-page.jsx';
 
 Enzyme.configure({adapter: new Adapter()});
 
-it(`simulate click event for 1st button`, () => {
-  const clickHandler = jest.fn();
-  const wrapper = shallow(<MainPage onButtonClickHanler={clickHandler} />);
+it(`should exist`, () => {
+  const offers = [{
+    name: `AAA`,
+    price: 120,
+    type: `AAA`,
+    src: `AAA`,
+  }];
+  const wrapper = shallow(<MainPage offers={offers} />);
 
-  wrapper.find(`button`).first().simulate(`click`);
-
-  expect(clickHandler).toHaveBeenCalledTimes(1);
+  expect(wrapper).toBeDefined();
 });
