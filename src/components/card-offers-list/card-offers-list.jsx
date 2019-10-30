@@ -7,7 +7,8 @@ export const CardOffersList = (props) => {
 
   return (
     offers.map((item, i) => {
-      return <CardOffer key={`offer-${i + 1}`} offer={item} offerName={`offer-${i + 1}`} onMouseEnterHandler={onMouseEnterHandler} />;
+      const uniqueName = `offer-${i + 1}`;
+      return <CardOffer key={uniqueName} offer={item} offerName={uniqueName} onMouseEnterHandler={onMouseEnterHandler} />;
     })
   );
 };
