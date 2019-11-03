@@ -118,7 +118,9 @@ export class MainPage extends React.PureComponent {
                             </div>
                           </section>
                           <div className="cities__right-section">
-                            <section className="cities__map map"></section>
+                            <section className="cities__map map">
+                              <div id="map" style={{height: 100 + `%`}} />
+                            </section>
                           </div>
                         </div>
                       </div>

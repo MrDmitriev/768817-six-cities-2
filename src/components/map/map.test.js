@@ -1,6 +1,6 @@
 import React from 'react';
+import {MapSection} from './map.jsx';
 import renderer from 'react-test-renderer';
-import {App} from './app.jsx';
 
 it(`should match snapshot`, () => {
   const offers = [{
@@ -10,7 +10,10 @@ it(`should match snapshot`, () => {
     src: `AAA`,
     position: [123, 123],
   }];
-  const app = renderer.create(<App offers={offers} />).toJSON();
 
-  expect(app).toMatchSnapshot();
+  const div = renderer.create(`div`);
+
+  const wrapper = renderer.create(<MapSection offers={offers} />, {div});
+
+  expect(wrapper).toMatchSnapshot();
 });
