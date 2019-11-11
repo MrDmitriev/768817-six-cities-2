@@ -135,5 +135,3 @@ export class MainPage extends React.PureComponent {
 MainPage.propTypes = {
   offers: PropTypes.array,
 };
-
-export default MainPage;
