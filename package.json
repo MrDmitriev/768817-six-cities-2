@@ -30,9 +30,7 @@
     "node": "10"
   },
   "dependencies": {
-    "leaflet": "0.7.7",
-    "react": "15.3.2",
-    "react-dom": "15.3.2",
-    "react-leaflet": "0.12.3"
+    "react": "16.10.2",
+    "react-dom": "16.10.2"
   }
 }

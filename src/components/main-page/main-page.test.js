@@ -8,7 +8,6 @@ it(`should match snapshot`, () => {
     price: 120,
     type: `AAA`,
     src: `AAA`,
-    position: [123, 123],
   }];
   const mainPage = renderer.create(<MainPage offers={offers} />).toJSON();
 

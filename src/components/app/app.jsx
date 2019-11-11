@@ -18,6 +18,5 @@ App.propTypes = {
     price: PropTypes.number,
     type: PropTypes.string,
     src: PropTypes.string,
-    position: PropTypes.array,
   })),
 };

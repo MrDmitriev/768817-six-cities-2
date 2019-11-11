@@ -11,7 +11,6 @@ it(`should exist`, () => {
     price: 120,
     type: `AAA`,
     src: `AAA`,
-    position: [123, 123],
   }];
   const wrapper = shallow(<MainPage offers={offers} />);
 
