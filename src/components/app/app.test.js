@@ -1,9 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {App} from './app.jsx';
-import {MainPage} from '../main-page/main-page.jsx';
 
-jest.mock(`../main-page/main-page.jsx`, () => jest.fn().mockReturnValue(null));
+jest.mock(`../map/map`);
 
 it(`should match snapshot`, () => {
   const offers = [{
@@ -14,6 +13,5 @@ it(`should match snapshot`, () => {
   }];
 
   const app = renderer.create(<App offers={offers} />).toJSON();
-  expect(MainPage).toHaveBeenCalled();
   expect(app).toMatchSnapshot();
 });
