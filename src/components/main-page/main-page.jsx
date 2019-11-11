@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {CardOffersList} from '../card-offers-list/card-offers-list.jsx';
+import {MapSection} from '../map/map.jsx';
 
 export class MainPage extends React.PureComponent {
   constructor(props) {
@@ -118,7 +119,9 @@ export class MainPage extends React.PureComponent {
                             </div>
                           </section>
                           <div className="cities__right-section">
-                            <section className="cities__map map"></section>
+                            <section className="cities__map map">
+                              <MapSection offers={offers} />
+                            </section>
                           </div>
                         </div>
                       </div>
@@ -132,3 +135,5 @@ export class MainPage extends React.PureComponent {
 MainPage.propTypes = {
   offers: PropTypes.array,
 };
+
+export default MainPage;

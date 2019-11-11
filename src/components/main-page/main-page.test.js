@@ -1,6 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MainPage} from './main-page.jsx';
+import MainPage from './main-page.jsx';
+
+jest.mock(`../map/map.jsx`, () => jest.fn().mockReturnValue(null));
 
 it(`should match snapshot`, () => {
   const offers = [{
