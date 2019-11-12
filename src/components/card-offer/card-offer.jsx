@@ -50,5 +50,7 @@ CardOffer.propTypes = {
     type: PropTypes.string,
     src: PropTypes.string,
     position: PropTypes.array,
+    city: PropTypes.string,
+    cityPosition: PropTypes.array,
   }),
 };

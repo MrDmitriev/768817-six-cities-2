@@ -21,22 +21,36 @@ export class MapSection extends React.PureComponent {
     });
 
     const zoom = 12;
-    const mapLeaf = leaflet.map(`map`, {
+    this.mapLeaf = leaflet.map(`map`, {
       center: city,
       zoom,
       zoomControl: false,
       marker: true
     });
-    mapLeaf.setView(city, zoom);
+    this.mapLeaf.setView(city, zoom);
 
     leaflet
     .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
       attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
     })
-    .addTo(mapLeaf);
-
+    .addTo(this.mapLeaf);
     return offers.map((item) => {
-      return leaflet.marker(item.position, {icon}).addTo(mapLeaf);
+      return leaflet.marker(item.position, {icon}).addTo(this.mapLeaf);
+    });
+  }
+
+  componentDidUpdate() {
+    const {offers} = this.props;
+    const city = offers[0].cityPosition;
+    const zoom = 12;
+    const icon = leaflet.icon({
+      iconUrl: `img/pin.svg`,
+      iconSize: [30, 30]
+    });
+
+    this.mapLeaf.setView(city, zoom);
+    return offers.map((item) => {
+      return leaflet.marker(item.position, {icon}).addTo(this.mapLeaf);
     });
   }
 }
@@ -44,3 +58,4 @@ export class MapSection extends React.PureComponent {
 MapSection.propTypes = {
   offers: PropTypes.array,
 };
+

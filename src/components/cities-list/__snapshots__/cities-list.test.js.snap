@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match snapshot 1`] = `
+<section
+  className="locations container"
+>
+  <ul
+    className="locations__list tabs__list"
+  >
+    <li
+      className="locations__item"
+      onClick={[Function]}
+    >
+      <a
+        className="locations__item-link tabs__item tabs__item--active"
+        href="#"
+      >
+        <span
+          id="AAA"
+        >
+          AAA
+        </span>
+      </a>
+    </li>
+  </ul>
+</section>
+`;
