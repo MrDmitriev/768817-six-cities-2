@@ -26,14 +26,7 @@ describe(`Component CitiesList works correctly`, () => {
   it(`should call setCity with given city name`, () => {
     const wrapper = shallow(<CitiesList {...props} />);
 
-    wrapper.find(`li`).first().simulate(`click`, {target: {id: `Paris`}});
+    wrapper.find(`a`).first().simulate(`click`, {currentTarget: {id: `Paris`}});
     expect(setCity).toHaveBeenCalledWith(`Paris`);
-  });
-
-  it(`should call setOffersList with given city name and offers`, () => {
-    const wrapper = shallow(<CitiesList {...props} />);
-
-    wrapper.find(`li`).first().simulate(`click`, {target: {id: `Paris`}});
-    expect(setOffersList).toHaveBeenCalledWith(`Paris`, props.offers);
   });
 });

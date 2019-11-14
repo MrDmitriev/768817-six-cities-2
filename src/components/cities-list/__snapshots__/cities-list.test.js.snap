@@ -9,15 +9,14 @@ exports[`should match snapshot 1`] = `
   >
     <li
       className="locations__item"
-      onClick={[Function]}
     >
       <a
         className="locations__item-link tabs__item tabs__item--active"
         href="#"
+        id="AAA"
+        onClick={[Function]}
       >
-        <span
-          id="AAA"
-        >
+        <span>
           AAA
         </span>
       </a>

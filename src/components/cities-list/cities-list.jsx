@@ -5,12 +5,11 @@ import {ActionCreator} from '../../reducer.js';
 
 export class CitiesList extends Component {
   render() {
-    const {cities, activeCity, setCity, setOffersList, offers} = this.props;
+    const {cities, activeCity, setCity} = this.props;
 
     const handleCityClick = (e) => {
-      const city = e.target.id;
+      const city = e.currentTarget.id;
       setCity(city);
-      setOffersList(city, offers);
     };
     return (
       <section className="locations container">
@@ -18,9 +17,14 @@ export class CitiesList extends Component {
           {cities.map((item) => {
             const isActive = activeCity === item;
             return (
-              <li className="locations__item" key={item} onClick={handleCityClick}>
-                <a className={`locations__item-link tabs__item ${isActive ? `tabs__item--active` : ``}`} href="#">
-                  <span id={item}>{item}</span>
+              <li className="locations__item" key={item} >
+                <a
+                  className={`locations__item-link tabs__item ${isActive ? `tabs__item--active` : ``}`}
+                  href="#"
+                  id={item}
+                  onClick={handleCityClick}
+                >
+                  <span>{item}</span>
                 </a>
               </li>
             );
