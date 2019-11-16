@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {MainPage} from '../main-page/main-page.jsx';
+import MainPage from '../main-page/main-page.jsx';
 
 export const App = (props) => {
-  const {offers} = props;
+  const {offers, cities} = props;
   const buttonClickHanler = () => {
     return null;
   };
 
-  return <MainPage onButtonClickHandler={buttonClickHanler} offers={offers} />;
+  return <MainPage onButtonClickHandler={buttonClickHanler} offers={offers} cities={cities} />;
 };
 
 App.propTypes = {
@@ -19,5 +19,8 @@ App.propTypes = {
     type: PropTypes.string,
     src: PropTypes.string,
     position: PropTypes.array,
+    city: PropTypes.string,
+    cityPosition: PropTypes.array,
   })),
+  cities: PropTypes.arrayOf(PropTypes.string),
 };
