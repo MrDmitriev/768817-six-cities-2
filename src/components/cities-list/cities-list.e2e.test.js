@@ -6,27 +6,25 @@ import {CitiesList} from './cities-list.jsx';
 Enzyme.configure({adapter: new Adapter()});
 
 describe(`Component CitiesList works correctly`, () => {
-  const setCity = jest.fn();
   const setOffersList = jest.fn();
-  const setDefaultCity = jest.fn();
+  const setDefaultItem = jest.fn();
   const props = {
     cities: [`AAA`],
-    activeCity: `AAA`,
+    activeItem: `AAA`,
     offers: [{
       name: `AAA`,
       price: 120,
       type: `AAA`,
       src: `AAA`,
     }],
-    setCity,
     setOffersList,
-    setDefaultCity,
+    setDefaultItem,
   };
 
   it(`should call setCity with given city name`, () => {
     const wrapper = shallow(<CitiesList {...props} />);
 
-    wrapper.find(`a`).first().simulate(`click`, {currentTarget: {id: `Paris`}});
-    expect(setCity).toHaveBeenCalledWith(`Paris`);
+    wrapper.find(`a`).first().simulate(`click`, {e: {currentTarget: {id: `Paris`}}});
+    expect(setOffersList).toHaveBeenCalledWith(`AAA`, props.offers);
   });
 });

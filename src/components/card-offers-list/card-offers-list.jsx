@@ -3,14 +3,21 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {CardOffer} from '../card-offer/card-offer.jsx';
+import withActiveItem from '../../hocs/with-active-item/with-active-item.js';
+
+const CardOfferWrapped = withActiveItem(CardOffer);
 
 export const CardOffersList = (props) => {
-  const {offers, onMouseEnterHandler} = props;
+  const {offers} = props;
 
   return (
     offers.map((item, i) => {
       const uniqueName = `offer-${i + 1}`;
-      return <CardOffer key={uniqueName} offer={item} offerName={uniqueName} onMouseEnterHandler={onMouseEnterHandler} />;
+      return <CardOfferWrapped
+        key={uniqueName}
+        offer={item}
+        offerName={uniqueName}
+      />;
     })
   );
 };
