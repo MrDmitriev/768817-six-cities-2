@@ -1,28 +1,24 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../reducer.js';
 
-export class CitiesList extends Component {
+export class CitiesList extends PureComponent {
   render() {
-    const {cities, activeCity, setCity} = this.props;
+    const {cities, activeItem, onItemClickHandler} = this.props;
 
-    const handleCityClick = (e) => {
-      const city = e.currentTarget.id;
-      setCity(city);
-    };
     return (
       <section className="locations container">
         <ul className="locations__list tabs__list">
           {cities.map((item) => {
-            const isActive = activeCity === item;
+            const isActive = activeItem === item;
             return (
               <li className="locations__item" key={item} >
                 <a
                   className={`locations__item-link tabs__item ${isActive ? `tabs__item--active` : ``}`}
                   href="#"
                   id={item}
-                  onClick={handleCityClick}
+                  onClick={onItemClickHandler}
                 >
                   <span>{item}</span>
                 </a>
@@ -35,23 +31,25 @@ export class CitiesList extends Component {
   }
 
   componentDidMount() {
-    const {offers, setDefaultCity} = this.props;
-    setDefaultCity(offers);
+    const {cities, setDefaultItem, setOffersList, activeItem, offers} = this.props;
+    setDefaultItem(cities[0]);
+    setOffersList(activeItem, offers);
   }
 
   componentDidUpdate(prevProps) {
-    const {offers, activeCity, setOffersList} = this.props;
-    if (prevProps.activeCity !== activeCity) {
-      setOffersList(activeCity, offers);
+    const {offers, activeItem, setOffersList} = this.props;
+    if (prevProps.activeItem !== activeItem) {
+      setOffersList(activeItem, offers);
     }
   }
 }
 
 CitiesList.propTypes = {
   cities: PropTypes.arrayOf(PropTypes.string),
-  activeCity: PropTypes.string,
+  activeItem: PropTypes.string,
   offers: PropTypes.array,
-  setCity: PropTypes.func,
+  onItemClickHandler: PropTypes.func,
+  setDefaultItem: PropTypes.func,
   setOffersList: PropTypes.func,
   setDefaultCity: PropTypes.func,
 };

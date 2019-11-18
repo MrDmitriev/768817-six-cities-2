@@ -6,7 +6,7 @@ import {CardOffer} from './card-offer.jsx';
 Enzyme.configure({adapter: new Adapter()});
 
 it(`simulates onMouseEnter event`, () => {
-  const onMouseEnterHandler = jest.fn();
+  const onItemClickHandler = jest.fn();
   const props = {
     offer: {
       name: `aaa`,
@@ -14,13 +14,13 @@ it(`simulates onMouseEnter event`, () => {
       type: `bbb`,
       src: `ccc`,
     },
-    onMouseEnterHandler,
+    onItemClickHandler,
     offerName: `offer-1`,
   };
 
   const wrapper = shallow(<CardOffer {...props} />);
 
-  wrapper.find(`img`).first().simulate(`mouseEnter`);
+  wrapper.find(`img`).first().simulate(`mouseEnter`, `offer-1`);
 
-  expect(onMouseEnterHandler).toHaveBeenCalledWith(`offer-1`);
+  expect(onItemClickHandler).toHaveBeenCalledWith(`offer-1`);
 });

@@ -4,6 +4,9 @@ import CardOffersList from '../card-offers-list/card-offers-list.jsx';
 import {MapSection} from '../map/map.jsx';
 import CitiesList from '../cities-list/cities-list.jsx';
 import {connect} from 'react-redux';
+import withActiveItem from '../../hocs/with-active-item/with-active-item.js';
+
+const CitiesListWrapped = withActiveItem(CitiesList);
 
 export class MainPage extends React.PureComponent {
   constructor(props) {
@@ -52,7 +55,7 @@ export class MainPage extends React.PureComponent {
                     <main className="page__main page__main--index">
                       <h1 className="visually-hidden">Cities</h1>
                       <div className="tabs">
-                        <CitiesList cities={cities} offers={offers} />
+                        <CitiesListWrapped cities={cities} offers={offers} />
                       </div>
                       <div className="cities">
                         <div className="cities__places-container container">

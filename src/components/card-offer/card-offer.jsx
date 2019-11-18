@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const CardOffer = (props) => {
-  const {offer, onMouseEnterHandler, offerName} = props;
+  const {offer, offerName, onItemClickHandler} = props;
   const {name, price, type, src} = offer;
-  const onMouseEnterHandle = () => onMouseEnterHandler(offerName);
 
   return (
     <article className="cities__place-card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={`../${src}`} width="260" height="200" alt="Place image" onMouseEnter={onMouseEnterHandle} />
+          <img className="place-card__image" src={`../${src}`} width="260" height="200" alt="Place image" id={offerName} onMouseEnter={onItemClickHandler}/>
         </a>
       </div>
       <div className="place-card__info">
@@ -43,7 +42,7 @@ export const CardOffer = (props) => {
 
 CardOffer.propTypes = {
   offerName: PropTypes.string,
-  onMouseEnterHandler: PropTypes.func,
+  onItemClickHandler: PropTypes.func,
   offer: PropTypes.exact({
     name: PropTypes.string,
     price: PropTypes.number,
