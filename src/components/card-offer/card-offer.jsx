@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 
 export const CardOffer = (props) => {
   const {offer, offerName, onItemClickHandler} = props;
-  const {name, price, type, src} = offer;
+  const {title, price, type, images} = offer;
 
   return (
     <article className="cities__place-card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={`../${src}`} width="260" height="200" alt="Place image" id={offerName} onMouseEnter={onItemClickHandler}/>
+          <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place image" id={offerName} onMouseEnter={onItemClickHandler}/>
         </a>
       </div>
       <div className="place-card__info">
@@ -32,7 +32,7 @@ export const CardOffer = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{name}</a>
+          <a href="#">{title}</a>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -43,13 +43,10 @@ export const CardOffer = (props) => {
 CardOffer.propTypes = {
   offerName: PropTypes.string,
   onItemClickHandler: PropTypes.func,
-  offer: PropTypes.exact({
-    name: PropTypes.string,
+  offer: PropTypes.shape({
+    title: PropTypes.string,
     price: PropTypes.number,
     type: PropTypes.string,
-    src: PropTypes.string,
-    position: PropTypes.array,
-    city: PropTypes.string,
-    cityPosition: PropTypes.array,
+    images: PropTypes.array,
   }),
 };

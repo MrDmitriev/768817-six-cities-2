@@ -28,6 +28,6 @@ CardOffersList.propTypes = {
 
 export default connect(
     (state) => ({
-      offers: state.offersList,
+      offers: state.data.filteredOffers,
     })
 )(CardOffersList);

@@ -1,24 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CardOffersList from '../card-offers-list/card-offers-list.jsx';
-import {MapSection} from '../map/map.jsx';
-import CitiesList from '../cities-list/cities-list.jsx';
 import {connect} from 'react-redux';
-import withActiveItem from '../../hocs/with-active-item/with-active-item.js';
 
-const CitiesListWrapped = withActiveItem(CitiesList);
+import CardOffersList from '../card-offers-list/card-offers-list.jsx';
+import MapSection from '../map/map.jsx';
+import CitiesList from '../cities-list/cities-list.jsx';
+import {loadOffers} from '../../reducers/data.js';
+import {startUpOffers} from '../../reducers/user.js';
 
 export class MainPage extends React.PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      focusedOfferName: ``,
-    };
   }
 
   render() {
-    const {offers, cities, filteredOffers, city} = this.props;
+    const {filteredOffers, activeCity} = this.props;
     const onMouseEnterHandler = (name) => {
       return this.setState({focusedOfferName: name});
     };
@@ -55,13 +51,13 @@ export class MainPage extends React.PureComponent {
                     <main className="page__main page__main--index">
                       <h1 className="visually-hidden">Cities</h1>
                       <div className="tabs">
-                        <CitiesListWrapped cities={cities} offers={offers} />
+                        <CitiesList offers={filteredOffers} />
                       </div>
                       <div className="cities">
                         <div className="cities__places-container container">
                           <section className="cities__places places">
                             <h2 className="visually-hidden">Places</h2>
-                            <b className="places__found">{filteredOffers.length} places to stay in {city}</b>
+                            <b className="places__found">{filteredOffers.length} places to stay in {activeCity}</b>
                             <form className="places__sorting" action="#" method="get">
                               <span className="places__sorting-caption">Sort by</span>
                               <span className="places__sorting-type" tabIndex="0">
@@ -86,7 +82,7 @@ export class MainPage extends React.PureComponent {
 
                             </form>
                             <div className="cities__places-list places__list tabs__content">
-                              {<CardOffersList offers={offers} onMouseEnterHandler={onMouseEnterHandler} />}
+                              {<CardOffersList offers={filteredOffers} onMouseEnterHandler={onMouseEnterHandler} />}
                             </div>
                           </section>
                           <div className="cities__right-section">
@@ -101,18 +97,29 @@ export class MainPage extends React.PureComponent {
           </>
     );
   }
+
+  componentDidMount() {
+    const {loadOffersList, setDefaultSettings} = this.props;
+    loadOffersList();
+    setDefaultSettings();
+  }
 }
 
 MainPage.propTypes = {
-  city: PropTypes.string,
-  offers: PropTypes.array,
+  activeCity: PropTypes.string,
   cities: PropTypes.arrayOf(PropTypes.string),
   filteredOffers: PropTypes.array,
+  setDefaultSettings: PropTypes.func,
+  loadOffersList: PropTypes.func,
 };
 
 export default connect(
     (state) => ({
-      filteredOffers: state.offersList,
-      city: state.city,
+      filteredOffers: state.data.filteredOffers,
+      activeCity: state.user.activeCity,
+    }),
+    (dispatch) => ({
+      loadOffersList: () => dispatch(loadOffers()),
+      setDefaultSettings: () => dispatch(startUpOffers()),
     })
 )(MainPage);
