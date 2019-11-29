@@ -15,11 +15,12 @@ it(`simulates onMouseEnter event`, () => {
       images: [`ccc`],
     },
     offerName: `offer-1`,
+    onItemClickHandler,
   };
 
   const wrapper = shallow(<CardOffer {...props} />);
 
   wrapper.find(`img`).first().simulate(`mouseEnter`, `offer-1`);
 
-  expect(onItemClickHandler).toHaveBeenCalled();
+  expect(onItemClickHandler).toHaveBeenCalledWith(`offer-1`);
 });

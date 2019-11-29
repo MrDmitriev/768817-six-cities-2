@@ -9,10 +9,10 @@ it(`should match snapshot`, () => {
     cities: [`AAA`],
     activeItem: `AAA`,
     offers: [{
-      name: `AAA`,
+      title: `AAA`,
       price: 120,
       type: `AAA`,
-      src: `AAA`,
+      images: [`AAA`],
     }],
     setOffersList,
     setDefaultItem,

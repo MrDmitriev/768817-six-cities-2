@@ -9,7 +9,7 @@ describe(`Component CitiesList works correctly`, () => {
   const setActiveCity = jest.fn();
   const updateOffersList = jest.fn();
   const props = {
-    cities: [`AAA`],
+    cities: [`Paris`, `AAA`],
     activeCity: `AAA`,
     setActiveCity,
     updateOffersList,
@@ -19,6 +19,6 @@ describe(`Component CitiesList works correctly`, () => {
     const wrapper = shallow(<CitiesList {...props} />);
 
     wrapper.find(`a`).first().simulate(`click`, {e: {currentTarget: {id: `Paris`}}});
-    expect(setActiveCity).toHaveBeenCalledWith(`AAA`, props.offers);
+    expect(setActiveCity).toHaveBeenCalledWith(`Paris`);
   });
 });
