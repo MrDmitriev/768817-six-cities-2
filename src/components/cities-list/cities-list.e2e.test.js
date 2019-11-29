@@ -15,10 +15,16 @@ describe(`Component CitiesList works correctly`, () => {
     updateOffersList,
   };
 
+  const e = {
+    currentTarget: {
+      id: `Paris`
+    }
+  };
+
   it(`should call setCity with given city name`, () => {
     const wrapper = shallow(<CitiesList {...props} />);
 
-    wrapper.find(`a`).first().simulate(`click`, {e: {currentTarget: {id: `Paris`}}});
+    wrapper.find(`a`).last().simulate(`click`, e);
     expect(setActiveCity).toHaveBeenCalledWith(`Paris`);
   });
 });

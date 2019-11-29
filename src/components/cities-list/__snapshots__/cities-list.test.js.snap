@@ -13,6 +13,20 @@ exports[`should match snapshot 1`] = `
       <a
         className="locations__item-link tabs__item "
         href="#"
+        id="Paris"
+        onClick={[Function]}
+      >
+        <span>
+          Paris
+        </span>
+      </a>
+    </li>
+    <li
+      className="locations__item"
+    >
+      <a
+        className="locations__item-link tabs__item tabs__item--active"
+        href="#"
         id="AAA"
         onClick={[Function]}
       >
