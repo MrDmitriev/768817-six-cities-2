@@ -7,6 +7,8 @@ jest.mock(`../cities-list/cities-list.jsx`);
 jest.mock(`../card-offers-list/card-offers-list.jsx`);
 
 it(`should match snapshot`, () => {
+  const loadOffersList = jest.fn();
+  const setDefaultSettings = jest.fn();
   const props = {
     offers: [{
       name: `AAA`,
@@ -22,6 +24,8 @@ it(`should match snapshot`, () => {
     }],
     cities: [`AAA`],
     activeCity: `AAA`,
+    loadOffersList,
+    setDefaultSettings,
   };
   const mainPage = renderer.create(<MainPage {...props} />).toJSON();
 

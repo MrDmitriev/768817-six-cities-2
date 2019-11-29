@@ -9,7 +9,15 @@ export const CardOffer = (props) => {
     <article className="cities__place-card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place image" id={offerName} onMouseEnter={onItemClickHandler}/>
+          <img
+            className="place-card__image"
+            src={images[0]}
+            width="260"
+            height="200"
+            alt="Place image"
+            id={offerName}
+            onMouseEnter={onItemClickHandler}
+          />
         </a>
       </div>
       <div className="place-card__info">
