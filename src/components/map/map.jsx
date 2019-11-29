@@ -1,6 +1,8 @@
 import React from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {isEmpty} from 'ramda';
 
 export class MapSection extends React.PureComponent {
   constructor(props) {
@@ -12,9 +14,15 @@ export class MapSection extends React.PureComponent {
   }
 
   componentDidMount() {
-    const {offers} = this.props;
+    const {filteredOffers} = this.props;
+    let lat = 0;
+    let long = 0;
+    if (!isEmpty(filteredOffers)) {
+      lat = filteredOffers[0].city.location.latitude;
+      long = filteredOffers[0].city.location.longitude;
+    }
 
-    const city = [52.38333, 4.9];
+    const city = [lat, long];
     const icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
       iconSize: [30, 30]
@@ -34,14 +42,21 @@ export class MapSection extends React.PureComponent {
       attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
     })
     .addTo(this.mapLeaf);
-    return offers.map((item) => {
+    return filteredOffers.map((item) => {
       return leaflet.marker(item.position, {icon}).addTo(this.mapLeaf);
     });
   }
 
   componentDidUpdate() {
-    const {offers} = this.props;
-    const city = offers[0].cityPosition;
+    const {filteredOffers} = this.props;
+    let lat = 0;
+    let long = 0;
+    if (!isEmpty(filteredOffers)) {
+      lat = filteredOffers[0].city.location.latitude;
+      long = filteredOffers[0].city.location.longitude;
+    }
+
+    const city = [lat, long];
     const zoom = 12;
     const icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
@@ -49,13 +64,21 @@ export class MapSection extends React.PureComponent {
     });
 
     this.mapLeaf.setView(city, zoom);
-    return offers.map((item) => {
-      return leaflet.marker(item.position, {icon}).addTo(this.mapLeaf);
+    return filteredOffers.map((item) => {
+      const {location} = item;
+      const position = [location.latitude, location.longitude];
+      return leaflet.marker(position, {icon}).addTo(this.mapLeaf);
     });
   }
 }
 
 MapSection.propTypes = {
-  offers: PropTypes.array,
+  filteredOffers: PropTypes.array,
 };
+
+export default connect(
+    (state) => ({
+      filteredOffers: state.data.filteredOffers,
+    })
+)(MapSection);
 

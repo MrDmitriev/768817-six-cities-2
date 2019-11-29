@@ -6,6 +6,8 @@ import {MainPage} from './main-page.jsx';
 Enzyme.configure({adapter: new Adapter()});
 
 it(`should exist`, () => {
+  const loadOffersList = jest.fn();
+  const setDefaultSettings = jest.fn();
   const props = {
     offers: [{
       name: `AAA`,
@@ -21,6 +23,8 @@ it(`should exist`, () => {
     }],
     cities: [`AAA`],
     activeCity: `AAA`,
+    loadOffersList,
+    setDefaultSettings,
   };
 
   const wrapper = shallow(<MainPage {...props} />);

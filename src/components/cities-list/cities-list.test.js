@@ -3,19 +3,13 @@ import renderer from 'react-test-renderer';
 import {CitiesList} from './cities-list.jsx';
 
 it(`should match snapshot`, () => {
-  const setOffersList = jest.fn();
-  const setDefaultItem = jest.fn();
+  const setActiveCity = jest.fn();
+  const updateOffersList = jest.fn();
   const props = {
-    cities: [`AAA`],
-    activeItem: `AAA`,
-    offers: [{
-      name: `AAA`,
-      price: 120,
-      type: `AAA`,
-      src: `AAA`,
-    }],
-    setOffersList,
-    setDefaultItem,
+    cities: [`Paris`, `AAA`],
+    activeCity: `AAA`,
+    setActiveCity,
+    updateOffersList,
   };
 
   const wrapper = renderer.create(<CitiesList {...props} />).toJSON();

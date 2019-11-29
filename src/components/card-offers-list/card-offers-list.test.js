@@ -7,7 +7,7 @@ it(`should match snapshot`, () => {
     name: `AAA`,
     price: 120,
     type: `AAA`,
-    src: `AAA`,
+    images: [`aaa`],
   }];
 
   const wrapper = renderer.create(<CardOffersList offers={offers} />).toJSON();

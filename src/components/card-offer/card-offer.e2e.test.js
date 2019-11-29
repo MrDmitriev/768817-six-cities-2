@@ -9,13 +9,13 @@ it(`simulates onMouseEnter event`, () => {
   const onItemClickHandler = jest.fn();
   const props = {
     offer: {
-      name: `aaa`,
+      title: `aaa`,
       price: 10,
       type: `bbb`,
-      src: `ccc`,
+      images: [`ccc`],
     },
-    onItemClickHandler,
     offerName: `offer-1`,
+    onItemClickHandler,
   };
 
   const wrapper = shallow(<CardOffer {...props} />);

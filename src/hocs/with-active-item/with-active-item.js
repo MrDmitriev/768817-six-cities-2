@@ -14,7 +14,6 @@ const withActiveItem = (Component) => {
       const {activeItem} = this.state;
       const itemClickHandler = (e) => {
         const newItem = e.currentTarget.id;
-
         this.setState({activeItem: newItem});
       };
 

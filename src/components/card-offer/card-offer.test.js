@@ -8,7 +8,7 @@ it(`should match snapshot`, () => {
       name: `aaa`,
       price: 10,
       type: `bbb`,
-      src: `ccc`,
+      images: [`ccc`],
     },
     onMouseEnterHandler: jest.fn(),
     offerName: `offer-1`,
