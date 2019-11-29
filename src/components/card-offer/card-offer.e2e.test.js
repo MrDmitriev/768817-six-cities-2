@@ -9,7 +9,7 @@ it(`simulates onMouseEnter event`, () => {
   const onItemClickHandler = jest.fn();
   const props = {
     offer: {
-      name: `aaa`,
+      title: `aaa`,
       price: 10,
       type: `bbb`,
       images: [`ccc`],
@@ -21,5 +21,5 @@ it(`simulates onMouseEnter event`, () => {
 
   wrapper.find(`img`).first().simulate(`mouseEnter`, `offer-1`);
 
-  expect(onItemClickHandler).toHaveBeenCalledWith(`offer-1`);
+  expect(onItemClickHandler).toHaveBeenCalled();
 });

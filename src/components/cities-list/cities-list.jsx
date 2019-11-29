@@ -41,7 +41,6 @@ export class CitiesList extends PureComponent {
 CitiesList.propTypes = {
   cities: PropTypes.arrayOf(PropTypes.string),
   activeCity: PropTypes.string,
-  offers: PropTypes.array,
   updateOffersList: PropTypes.func,
   setActiveCity: PropTypes.func,
 };
