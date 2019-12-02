@@ -23,6 +23,9 @@ it(`should exist`, () => {
     }],
     cities: [`AAA`],
     activeCity: `AAA`,
+    responseAuth: {
+      email: `ccc@cv.cz`
+    },
     loadOffersList,
     setDefaultSettings,
   };

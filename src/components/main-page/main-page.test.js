@@ -24,6 +24,9 @@ it(`should match snapshot`, () => {
     }],
     cities: [`AAA`],
     activeCity: `AAA`,
+    responseAuth: {
+      email: `ccc@cv.cz`
+    },
     loadOffersList,
     setDefaultSettings,
   };
