@@ -2,6 +2,7 @@ import {createSelector} from 'reselect';
 import {getActviveCity} from './user';
 
 export const getOffers = (state) => state.data.offers;
+export const getResponseAuth = (state) => state.data.responses.auth;
 
 export const getFilteredOffers = createSelector(
     getActviveCity,

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {requireAuthorization} from '../reducers/user';
 
 const createAPI = () => {
   const api = axios.create({
@@ -11,7 +12,15 @@ const createAPI = () => {
     return response;
   };
 
-  api.interceptors.response.use(onSuccess);
+  const onError = (err) => {
+    if (err.response.satus === 403) {
+      return requireAuthorization(true);
+    }
+
+    return err;
+  };
+
+  api.interceptors.response.use(onSuccess, onError);
 
   return api;
 };

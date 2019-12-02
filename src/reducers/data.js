@@ -4,10 +4,12 @@ import {getFilteredOffers} from '../selectors/data.js';
 const initialState = {
   offers: [],
   filteredOffers: [],
+  responses: {},
 };
 
 export const setOffers = (offers) => ({type: `SET_OFFERS`, payload: offers});
 export const setFilteredOffers = (offers) => ({type: `SET_FILTERED_OFFERS`, payload: offers});
+export const saveAuthResponse = (authResponse) => ({type: `SAVE_AUTH_RESPONSE`, payload: authResponse});
 
 const filterOffers = (activeCity, offers) => {
   return offers.filter((item) => {
@@ -51,6 +53,9 @@ const data = (state = initialState, action) => {
       return Object.assign({}, state, {offers: action.payload});
     case `SET_FILTERED_OFFERS`:
       return Object.assign({}, state, {filteredOffers: action.payload});
+    case `SAVE_AUTH_RESPONSE`:
+      const responses = Object.assign({}, state.responses, {auth: action.payload});
+      return Object.assign({}, state, {responses});
   }
 
   return state;

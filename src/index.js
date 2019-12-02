@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import {compose} from 'recompose';
 
 import {cities} from './mocks/cities.js';
-import {App} from './components/app/app.jsx';
+import App from './components/app/app.jsx';
 import reducer from './reducers/index.js';
 import createAPI from './api/api.js';
 
