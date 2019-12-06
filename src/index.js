@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter} from 'react-router-dom';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
@@ -22,7 +23,9 @@ const init = () => {
 
   ReactDOM.render(
       <Provider store={store}>
-        <App cities={cities} />
+        <BrowserRouter>
+          <App cities={cities} />
+        </BrowserRouter>
       </Provider>,
       document.querySelector(`#root`)
   );
