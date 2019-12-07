@@ -1,7 +1,6 @@
 import React from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import {isEmpty} from 'ramda';
 
 export class MapSection extends React.PureComponent {
@@ -76,10 +75,4 @@ export class MapSection extends React.PureComponent {
 MapSection.propTypes = {
   filteredOffers: PropTypes.array,
 };
-
-export default connect(
-    (state) => ({
-      filteredOffers: state.data.filteredOffers,
-    })
-)(MapSection);
 

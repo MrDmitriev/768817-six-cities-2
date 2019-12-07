@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import CardOffersList from '../card-offers-list/card-offers-list.jsx';
-import MapSection from '../map/map.jsx';
+import {MapSection} from '../map/map.jsx';
 import CitiesList from '../cities-list/cities-list.jsx';
 import {loadOffers} from '../../reducers/data.js';
 import {startUpOffers} from '../../reducers/user.js';
@@ -103,7 +103,7 @@ export class MainPage extends React.PureComponent {
                     </section>
                     <div className="cities__right-section">
                       <section className="cities__map map">
-                        <MapSection />
+                        <MapSection filteredOffers={filteredOffers} />
                       </section>
                     </div>
                   </div>

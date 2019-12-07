@@ -2,15 +2,18 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {getOffer, getOffers} from '../../selectors/data';
+import {getOffer, getReviews, getFilteredOffers} from '../../selectors/data';
 import {Logo} from '../logo/logo.jsx';
 import {loadOffers} from '../../reducers/data.js';
 import {startUpOffers} from '../../reducers/user.js';
 import {ratingTitles} from '../../constants/constants.js';
+import ReviewsList from '../reviews-list/reviews-list.jsx';
+import {loadReviews} from '../../reducers/data';
+import {MapSection} from '../map/map.jsx';
 
 export class OfferDetail extends PureComponent {
   render() {
-    const {offer} = this.props;
+    const {offer, reviews, filteredOffers} = this.props;
     const ratingPercent = offer && (offer.rating / 5) * 100;
     return offer ? (
       <>
@@ -134,45 +137,22 @@ export class OfferDetail extends PureComponent {
                     </div>
                   </div>
                   <section className="property__reviews reviews">
-                    <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                    <ul className="reviews__list">
-                      <li className="reviews__item">
-                        <div className="reviews__user user">
-                          <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                            <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
-                          </div>
-                          <span className="reviews__user-name">
-                            Max
-                          </span>
-                        </div>
-                        <div className="reviews__info">
-                          <div className="reviews__rating rating">
-                            <div className="reviews__stars rating__stars">
-                              <span style={{width: `94%`}}></span>
-                              <span className="visually-hidden">Rating</span>
-                            </div>
-                          </div>
-                          <p className="reviews__text">
-                            A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                          </p>
-                          <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                        </div>
-                      </li>
-                    </ul>
+                    <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                    <ReviewsList reviews={reviews} />
                     <form className="reviews__form form" action="#" method="post">
                       <label className="reviews__label form__label" htmlFor="review">Your review</label>
                       <div className="reviews__rating-form form__rating">
                         {ratingTitles.map((item, i) => {
                           const count = i + 1;
                           return (
-                            <>
+                            <React.Fragment key={item}>
                               <input className="form__rating-input visually-hidden" name="rating" value={count} id={`${count}-stars`} type="radio" />
                               <label htmlFor={`${count}-stars`} className="reviews__rating-label form__rating-label" title={item}>
                                 <svg className="form__star-image" width="37" height="33">
                                   <use xlinkHref="#icon-star"></use>
                                 </svg>
                               </label>
-                            </>
+                            </React.Fragment>
                           );
                         })}
                       </div>
@@ -187,7 +167,10 @@ export class OfferDetail extends PureComponent {
                   </section>
                 </div>
               </div>
-              <section className="property__map map"></section>
+              <section className="property__map map">
+                <MapSection filteredOffers={filteredOffers} />
+
+              </section>
             </section>
             <div className="container">
               <section className="near-places places">
@@ -298,26 +281,36 @@ export class OfferDetail extends PureComponent {
   }
 
   componentDidMount() {
-    const {loadOffersList, setDefaultSettings} = this.props;
+    const {loadOffersList, setDefaultSettings, match, loadOfferReviews} = this.props;
     loadOffersList();
     setDefaultSettings();
+    loadOfferReviews(match.params.id);
   }
 }
 
 OfferDetail.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    })
+  }),
   offer: PropTypes.object,
-  offers: PropTypes.array,
+  reviews: PropTypes.array,
+  filteredOffers: PropTypes.array,
   loadOffersList: PropTypes.func,
   setDefaultSettings: PropTypes.func,
+  loadOfferReviews: PropTypes.func,
 };
 
 export default connect(
     (state, ownProps) => ({
       offer: getOffer(state, ownProps.match.params.id),
-      offers: getOffers(state),
+      filteredOffers: getFilteredOffers(state),
+      reviews: getReviews(state),
     }),
-    (dispatch) => ({
+    (dispatch, ownProps) => ({
       loadOffersList: () => dispatch(loadOffers()),
       setDefaultSettings: () => dispatch(startUpOffers()),
+      loadOfferReviews: () => dispatch(loadReviews(ownProps.match.params.id)),
     })
 )(OfferDetail);
