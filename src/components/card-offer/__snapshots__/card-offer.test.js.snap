@@ -85,7 +85,8 @@ exports[`should match snapshot 1`] = `
       className="place-card__name"
     >
       <a
-        href="#"
+        href="/offer/undefined"
+        onClick={[Function]}
       />
     </h2>
     <p

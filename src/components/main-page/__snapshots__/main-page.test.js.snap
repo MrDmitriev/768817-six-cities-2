@@ -58,13 +58,14 @@ Array [
             className="header__left"
           >
             <a
-              className="header__logo-link header__logo-link--active"
+              href="/"
+              onClick={[Function]}
             >
               <img
                 alt="6 cities logo"
                 className="header__logo"
                 height="41"
-                src="img/logo.svg"
+                src="../img/logo.svg"
                 width="81"
               />
             </a>
@@ -85,11 +86,6 @@ Array [
                   <div
                     className="header__avatar-wrapper user__avatar-wrapper"
                   />
-                  <span
-                    className="header__user-name user__name"
-                  >
-                    ccc@cv.cz
-                  </span>
                 </a>
               </li>
             </ul>

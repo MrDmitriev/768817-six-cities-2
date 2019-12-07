@@ -17,6 +17,7 @@ export const CardOffersList = (props) => {
         key={uniqueName}
         offer={item}
         offerName={uniqueName}
+        id={item.id}
       />;
     })
   );

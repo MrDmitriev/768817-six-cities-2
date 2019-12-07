@@ -43,7 +43,8 @@ export class MapSection extends React.PureComponent {
     })
     .addTo(this.mapLeaf);
     return filteredOffers.map((item) => {
-      return leaflet.marker(item.position, {icon}).addTo(this.mapLeaf);
+      const position = item.position ? item.position : [0, 0];
+      return leaflet.marker(position, {icon}).addTo(this.mapLeaf);
     });
   }
 
