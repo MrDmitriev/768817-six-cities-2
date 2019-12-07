@@ -1,5 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {BrowserRouter} from 'react-router-dom';
+
 import {MainPage} from './main-page.jsx';
 
 jest.mock(`../map/map.jsx`);
@@ -30,7 +32,11 @@ it(`should match snapshot`, () => {
     loadOffersList,
     setDefaultSettings,
   };
-  const mainPage = renderer.create(<MainPage {...props} />).toJSON();
+  const mainPage = renderer.create(
+      <BrowserRouter>
+        <MainPage {...props} />
+      </BrowserRouter>
+  ).toJSON();
 
   expect(mainPage).toMatchSnapshot();
 });

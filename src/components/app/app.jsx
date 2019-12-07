@@ -1,22 +1,25 @@
 import {connect} from 'react-redux';
-import {Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import MainPage from '../main-page/main-page.jsx';
 import SignIn from '../sign-in/sign-in.jsx';
+import OfferDetail from '../offer-detail/offer-detail.jsx';
 
 export class App extends React.PureComponent {
   render() {
     return (
-      <Switch>
-        {/* <Route path={`/`} component={MainPage} exact /> */}
-        <Route path={`/login`} component={SignIn} exact />
-      </Switch>
+      <BrowserRouter>
+        <Switch>
+          <Route path={`/`} component={MainPage} exact />
+          <Route path={`/login`} component={SignIn} exact />
+          <Route path={`/offer/:id`} component={OfferDetail} exact />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
-
 
 App.propTypes = {
   isAuthorizationRequired: PropTypes.bool,
