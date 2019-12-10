@@ -4,6 +4,7 @@ import {getAuthFormData} from '../selectors/user.js';
 
 const initialState = {
   activeCity: ``,
+  activeOffer: null,
   citiesList: [],
   isAuthorizationRequired: false,
   formAuth: {},
@@ -13,6 +14,7 @@ export const setCity = (city) => ({type: `SET_CITY`, payload: city});
 export const setCitiesList = (cities) => ({type: `SET_CITIES`, payload: cities});
 export const requireAuthorization = (isAuthorizationRequired) => ({type: `REQUIRE_AUTHORIZATION`, payload: isAuthorizationRequired});
 export const updateFieldValue = (fieldName, value) => ({type: `UPDATE_FIELD_VALUE`, payload: {fieldName, value}});
+export const setActiveOffer = (offerId) => ({type: `SET_ACTIVE_OFFER`, payload: offerId});
 
 export const startUpOffers = () => (dispatch, getState) => {
   const state = getState();
@@ -43,6 +45,7 @@ export const ActionCreator = {
   setCitiesList,
   requireAuthorization,
   updateFieldValue,
+  setActiveOffer,
 };
 
 const user = (state = initialState, action) => {
@@ -61,6 +64,9 @@ const user = (state = initialState, action) => {
       const formAuth = Object.assign({}, state.formAuth, {[fieldName]: value});
 
       return Object.assign({}, state, {formAuth});
+
+    case `SET_ACTIVE_OFFER`:
+      return Object.assign({}, state, {activeOffer: action.payload});
   }
 
   return state;

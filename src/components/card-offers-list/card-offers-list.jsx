@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {CardOffer} from '../card-offer/card-offer.jsx';
-import withActiveItem from '../../hocs/with-active-item/with-active-item.js';
-
-const CardOfferWrapped = withActiveItem(CardOffer);
+import {cardTypes} from '../../constants/constants.js';
 
 export const CardOffersList = (props) => {
   const {offers} = props;
@@ -13,11 +11,12 @@ export const CardOffersList = (props) => {
   return (
     offers.map((item, i) => {
       const uniqueName = `offer-${i + 1}`;
-      return <CardOfferWrapped
+      return <CardOffer
         key={uniqueName}
         offer={item}
         offerName={uniqueName}
         id={item.id}
+        cardType={cardTypes.CITIES}
       />;
     })
   );

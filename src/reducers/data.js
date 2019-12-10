@@ -1,5 +1,8 @@
+import {isEmpty, propEq, find, isNil} from 'ramda';
+
 import {setCitiesList, setCity} from './user.js';
 import {getFilteredOffers} from '../selectors/data.js';
+import {getActviveCity} from '../selectors/user.js';
 
 const initialState = {
   offers: [],
@@ -19,7 +22,9 @@ const filterOffers = (activeCity, offers) => {
   });
 };
 
-export const loadOffers = () => (dispatch, getState, api) => {
+export const loadOffers = (offerId) => (dispatch, getState, api) => {
+  const activeCity = getActviveCity(getState());
+
   return api.get(`/hotels`)
   .then((response) => {
     const offers = response.data;
@@ -30,12 +35,24 @@ export const loadOffers = () => (dispatch, getState, api) => {
       return citiesList.includes(cityName) ? null : citiesList.push(cityName);
     });
 
-    const filteredOffers = filterOffers(citiesList[0], offers);
 
     dispatch(setOffers(offers));
     dispatch(setCitiesList(citiesList));
-    dispatch(setCity(citiesList[0]));
-    dispatch(setFilteredOffers(filteredOffers));
+
+    if (isEmpty(activeCity) && isNil(offerId)) {
+      const defaultCity = citiesList[0];
+      const filteredOffers = filterOffers(defaultCity, offers);
+      dispatch(setCity(defaultCity));
+      dispatch(setFilteredOffers(filteredOffers));
+    }
+
+    if (isEmpty(activeCity) && !isNil(offerId)) {
+      const offer = find(propEq(`id`, offerId))(offers);
+      const defaultCity = offer.city.name;
+      const filteredOffers = filterOffers(defaultCity, offers);
+      dispatch(setCity(defaultCity));
+      dispatch(setFilteredOffers(filteredOffers));
+    }
   });
 };
 
