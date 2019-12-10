@@ -9,7 +9,7 @@ import {loadOffers} from '../../reducers/data.js';
 import {startUpOffers} from '../../reducers/user.js';
 import {ActionCreator} from '../../reducers/index.js';
 import {ratingTitles, cardTypes} from '../../constants/constants.js';
-import ReviewsList from '../reviews-list/reviews-list.jsx';
+import {ReviewsList} from '../reviews-list/reviews-list.jsx';
 import {loadReviews} from '../../reducers/data';
 import {MapSection} from '../map/map.jsx';
 import {CardOffer} from '../card-offer/card-offer.jsx';
@@ -220,7 +220,7 @@ export class OfferDetail extends PureComponent {
 OfferDetail.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.string,
+      id: PropTypes.number,
     })
   }),
   offer: PropTypes.object,

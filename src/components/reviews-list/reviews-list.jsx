@@ -1,16 +1,15 @@
 import React, {PureComponent} from 'react';
-import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import ReviewItem from '../review-item/review-item.jsx';
+import {ReviewItem} from '../review-item/review-item.jsx';
 
 export class ReviewsList extends PureComponent {
   render() {
     const {reviews} = this.props;
     return (
       <ul className="reviews__list">
-        {reviews.map((item) => {
-          return <ReviewItem review={item} key={item.id} />;
+        {reviews.map((item, i) => {
+          return <ReviewItem review={item} key={item.id + i} />;
         })}
       </ul>
     );
@@ -20,5 +19,3 @@ export class ReviewsList extends PureComponent {
 ReviewsList.propTypes = {
   reviews: PropTypes.array,
 };
-
-export default connect()(ReviewsList);

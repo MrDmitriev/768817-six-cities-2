@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import React, {PureComponent} from 'react';
-import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 export class ReviewItem extends PureComponent {
@@ -41,9 +40,6 @@ ReviewItem.propTypes = {
       avatar_url: PropTypes.string,
     }),
     comment: PropTypes.string,
-    rating: PropTypes.number,
+    rating: PropTypes.string,
   })
 };
-
-export default connect()(ReviewItem);
-

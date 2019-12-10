@@ -81,6 +81,6 @@ MapSection.propTypes = {
       latitude: PropTypes.number,
       longitude: PropTypes.number,
     })
-  }).isRequired
+  })
 };
 
