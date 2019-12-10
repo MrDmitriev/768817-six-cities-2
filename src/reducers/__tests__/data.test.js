@@ -32,15 +32,19 @@ describe(`reducer works correctly`, () => {
 
   it(`should create a correct API call to a /hotels endPoint`, () => {
     const dispatch = jest.fn();
+    const getState = jest.fn();
+
+    getState.mockReturnValue({user: {activeCity: `Amster`}});
+
     const api = createAPI(dispatch);
     const apiMock = new MockAdapter(api);
     const offersLoader = loadOffers();
 
     apiMock.onGet(`/hotels`).reply(200, [{city: {name: `aaa`}}]);
 
-    return offersLoader(dispatch, null, api)
+    return offersLoader(dispatch, getState, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(4);
+        expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: `SET_OFFERS`,
           payload: [{city: {name: `aaa`}}],

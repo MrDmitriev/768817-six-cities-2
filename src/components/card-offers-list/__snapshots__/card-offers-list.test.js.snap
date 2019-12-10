@@ -15,7 +15,6 @@ exports[`should match snapshot 1`] = `
         className="place-card__image"
         height="200"
         id="offer-1"
-        onMouseEnter={[Function]}
         src="aaa"
         width="260"
       />

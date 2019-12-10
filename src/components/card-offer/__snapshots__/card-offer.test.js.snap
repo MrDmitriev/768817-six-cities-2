@@ -2,10 +2,10 @@
 
 exports[`should match snapshot 1`] = `
 <article
-  className="cities__place-card place-card"
+  className="undefined__card place-card"
 >
   <div
-    className="cities__image-wrapper place-card__image-wrapper"
+    className="undefined__image-wrapper place-card__image-wrapper"
   >
     <a
       href="#"

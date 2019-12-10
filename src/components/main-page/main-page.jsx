@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {isEmpty} from 'ramda';
 
 import CardOffersList from '../card-offers-list/card-offers-list.jsx';
-import MapSection from '../map/map.jsx';
+import {MapSection} from '../map/map.jsx';
 import CitiesList from '../cities-list/cities-list.jsx';
 import {loadOffers} from '../../reducers/data.js';
 import {startUpOffers} from '../../reducers/user.js';
@@ -17,6 +18,7 @@ export class MainPage extends React.PureComponent {
 
   render() {
     const {filteredOffers, activeCity} = this.props;
+    const city = !isEmpty(filteredOffers) ? filteredOffers[0].city : {};
     // const {email} = responseAuth;
     const onMouseEnterHandler = (name) => {
       return this.setState({focusedOfferName: name});
@@ -98,12 +100,12 @@ export class MainPage extends React.PureComponent {
 
                       </form>
                       <div className="cities__places-list places__list tabs__content">
-                        {<CardOffersList offers={filteredOffers} onMouseEnterHandler={onMouseEnterHandler} />}
+                        {<CardOffersList onMouseEnterHandler={onMouseEnterHandler} />}
                       </div>
                     </section>
                     <div className="cities__right-section">
                       <section className="cities__map map">
-                        <MapSection />
+                        <MapSection offers={filteredOffers} city={city} />
                       </section>
                     </div>
                   </div>

@@ -9,9 +9,18 @@ Enzyme.configure({adapter: new Adapter()});
 it(`should load offers and set default settings`, () => {
   const loadOffersList = jest.fn();
   const setDefaultSettings = jest.fn();
+  const loadOfferReviews = jest.fn();
+  const setActiveOffer = jest.fn();
   const props = {
     loadOffersList,
-    setDefaultSettings
+    setDefaultSettings,
+    loadOfferReviews,
+    setActiveOffer,
+    match: {
+      params: {
+        id: 1
+      }
+    }
   };
 
   const wrapper = shallow(<OfferDetail {...props} />);

@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {cardTypes} from '../../constants/constants.js';
 
 export class CardOffer extends React.PureComponent {
   render() {
-    const {offer, offerName, onItemClickHandler} = this.props;
+    const {offer, offerName, onItemClickHandler, cardType} = this.props;
     const {title, price, type, images} = offer;
-
     return (
-      <article className="cities__place-card place-card">
-        <div className="cities__image-wrapper place-card__image-wrapper">
+      <article className={`${cardType}__${cardType === cardTypes.CITIES ? `place-` : ``}card place-card`}>
+        <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
           <a href="#">
             <img
               className="place-card__image"
@@ -53,6 +53,7 @@ export class CardOffer extends React.PureComponent {
 
 CardOffer.propTypes = {
   offerName: PropTypes.string,
+  cardType: PropTypes.string,
   onItemClickHandler: PropTypes.func,
   offer: PropTypes.shape({
     title: PropTypes.string,

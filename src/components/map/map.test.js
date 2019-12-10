@@ -18,11 +18,18 @@ it(`should match snapshot`, () => {
     position: [123, 123],
   }];
 
+  const city = {
+    location: {
+      latitude: 123,
+      longitude: 214,
+    }
+  };
+
   const div = document.createElement(`div`);
   div.id = `map`;
   document.body.appendChild(div);
 
-  const wrapper = renderer.create(<MapSection filteredOffers={filteredOffers} />).toJSON();
+  const wrapper = renderer.create(<MapSection filteredOffers={filteredOffers} city={city} />).toJSON();
 
   expect(wrapper).toMatchSnapshot();
 });
