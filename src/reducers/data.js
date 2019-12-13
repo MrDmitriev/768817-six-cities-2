@@ -1,8 +1,10 @@
-import {isEmpty, propEq, find, isNil} from 'ramda';
+import {isEmpty, propEq, find, isNil, ascend, prop, sort, descend} from 'ramda';
 
 import {setCitiesList, setCity} from './user.js';
 import {getFilteredOffers} from '../selectors/data.js';
 import {getActviveCity} from '../selectors/user.js';
+import {getActiveSortType} from '../selectors/sort.js';
+import {sortTypes} from '../constants/constants.js';
 
 const initialState = {
   offers: [],
@@ -20,6 +22,33 @@ const filterOffers = (activeCity, offers) => {
   return offers.filter((item) => {
     return item.city.name === activeCity;
   });
+};
+
+const sortOffers = (offers, sortType) => {
+  switch (sortType) {
+    case sortTypes.priceAsc:
+      const byPriceAsc = ascend(prop(`price`));
+      return sort(byPriceAsc, offers);
+
+    case sortTypes.priceDesc:
+      const byPriceDesc = descend(prop(`price`));
+      return sort(byPriceDesc, offers);
+
+    case sortTypes.rateDesc:
+      const byRateDesc = descend(prop(`rating`));
+      return sort(byRateDesc, offers);
+  }
+
+  return offers;
+};
+
+export const sortFilteredOffers = () => (dispatch, getState) => {
+  const filteredOffers = getFilteredOffers(getState());
+  const sortType = getActiveSortType(getState());
+
+  const sortedOffers = sortOffers(filteredOffers, sortType);
+
+  dispatch(setFilteredOffers(sortedOffers));
 };
 
 export const loadOffers = (offerId) => (dispatch, getState, api) => {
@@ -74,6 +103,8 @@ export const ActionCreator = {
   setOffers,
   setRviews,
   setFilteredOffers,
+  loadOffers,
+  sortFilteredOffers,
 };
 
 const data = (state = initialState, action) => {

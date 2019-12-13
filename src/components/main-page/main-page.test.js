@@ -7,6 +7,7 @@ import {MainPage} from './main-page.jsx';
 jest.mock(`../map/map.jsx`);
 jest.mock(`../cities-list/cities-list.jsx`);
 jest.mock(`../card-offers-list/card-offers-list.jsx`);
+jest.mock(`../sort-offers/sort-offers.jsx`);
 
 it(`should match snapshot`, () => {
   const loadOffersList = jest.fn();

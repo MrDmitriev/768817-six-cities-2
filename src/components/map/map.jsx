@@ -37,19 +37,26 @@ export class MapSection extends React.PureComponent {
     });
     this.mapLeaf.setView(center, zoom);
 
+
     leaflet
     .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
       attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
     })
     .addTo(this.mapLeaf);
-    return offers && offers.map((item) => {
-      const position = item.position ? item.position : [0, 0];
-      return leaflet.marker(position, {icon}).addTo(this.mapLeaf);
-    });
+
+    let a = Array.from(
+        offers.map((item) => {
+          const position = item ? [item.location.latitude, item.location.longitude] : [0, 0];
+          return leaflet.marker(position, {icon});
+        })
+    );
+
+    this.markersLayer = leaflet.layerGroup(a).addTo(this.mapLeaf);
   }
 
   componentDidUpdate() {
-    const {offers, city} = this.props;
+    const {offers, city, hoveredOfferId} = this.props;
+    this.markersLayer.clearLayers();
     let lat = 0;
     let long = 0;
     if (!isEmpty(city)) {
@@ -64,18 +71,28 @@ export class MapSection extends React.PureComponent {
       iconSize: [30, 30]
     });
 
-    this.mapLeaf.setView(center, zoom);
-    return offers && offers.map((item) => {
-      const {location} = item;
-      const position = [location.latitude, location.longitude];
-
-      return leaflet.marker(position, {icon}).addTo(this.mapLeaf);
+    const hoveredIcon = leaflet.icon({
+      iconUrl: `../img/pin-active.svg`,
+      iconSize: [30, 30],
     });
+
+    this.mapLeaf.setView(center, zoom);
+    let a = Array.from(
+        offers.map((item) => {
+          const position = item ? [item.location.latitude, item.location.longitude] : [0, 0];
+          if (item.id === Number(hoveredOfferId)) {
+            return leaflet.marker(position, {icon: hoveredIcon});
+          }
+          return leaflet.marker(position, {icon});
+        })
+    );
+    this.markersLayer = leaflet.layerGroup(a).addTo(this.mapLeaf);
   }
 }
 
 MapSection.propTypes = {
   offers: PropTypes.array,
+  hoveredOfferId: PropTypes.string,
   city: PropTypes.shape({
     location: PropTypes.shape({
       latitude: PropTypes.number,

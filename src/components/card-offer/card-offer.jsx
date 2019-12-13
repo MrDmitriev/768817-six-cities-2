@@ -5,8 +5,14 @@ import {cardTypes} from '../../constants/constants.js';
 
 export class CardOffer extends React.PureComponent {
   render() {
-    const {offer, offerName, onItemClickHandler, cardType} = this.props;
-    const {title, price, type, images} = offer;
+    const {offer, mouseEnterHandler, cardType} = this.props;
+    const {title, price, type, images, rating} = offer;
+    const ratingPercent = (rating / 5) * 100;
+
+    const handleMouseEnter = (e) => {
+      mouseEnterHandler(e.currentTarget.id);
+    };
+
     return (
       <article className={`${cardType}__${cardType === cardTypes.CITIES ? `place-` : ``}card place-card`}>
         <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
@@ -17,8 +23,8 @@ export class CardOffer extends React.PureComponent {
               width="260"
               height="200"
               alt="Place image"
-              id={offerName}
-              onMouseEnter={onItemClickHandler}
+              id={offer.id}
+              onMouseEnter={handleMouseEnter}
             />
           </a>
         </div>
@@ -37,7 +43,7 @@ export class CardOffer extends React.PureComponent {
           </div>
           <div className="place-card__rating rating">
             <div className="place-card__stars rating__stars">
-              <span style={{width: `80%`}}></span>
+              <span style={{width: `${ratingPercent}%`}}></span>
               <span className="visually-hidden">Rating</span>
             </div>
           </div>
@@ -54,12 +60,13 @@ export class CardOffer extends React.PureComponent {
 CardOffer.propTypes = {
   offerName: PropTypes.string,
   cardType: PropTypes.string,
-  onItemClickHandler: PropTypes.func,
+  mouseEnterHandler: PropTypes.func,
   offer: PropTypes.shape({
     title: PropTypes.string,
     price: PropTypes.number,
     type: PropTypes.string,
     images: PropTypes.array,
-    id: PropTypes.number
+    id: PropTypes.number,
+    rating: PropTypes.number,
   }),
 };
