@@ -58,7 +58,6 @@ export const loadOffers = (offerId) => (dispatch, getState, api) => {
   .then((response) => {
     const offers = response.data;
     let citiesList = [];
-
     offers.forEach((item) => {
       const cityName = item.city.name;
       return citiesList.includes(cityName) ? null : citiesList.push(cityName);

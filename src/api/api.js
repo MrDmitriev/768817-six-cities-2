@@ -1,5 +1,7 @@
 import axios from 'axios';
+import {isEmpty} from 'ramda';
 import {requireAuthorization} from '../reducers/user';
+import history from '../history/history';
 
 const createAPI = () => {
   const api = axios.create({
@@ -9,7 +11,7 @@ const createAPI = () => {
   });
 
   const onSuccess = (response) => {
-    return response;
+    return isEmpty(response.data) ? history.push(`/offers-not-found`) : response;
   };
 
   const onError = (err) => {
@@ -17,7 +19,7 @@ const createAPI = () => {
       return requireAuthorization(true);
     }
 
-    return err;
+    return history.push(`/offers-not-found`);
   };
 
   api.interceptors.response.use(onSuccess, onError);
