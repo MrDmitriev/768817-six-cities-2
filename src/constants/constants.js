@@ -7,3 +7,11 @@ export const cardTypes = {
   NEAR_PLACES: `near-places`,
 };
 
+export const sortTypes = {
+  popular: `popular`,
+  priceAsc: `priceAsc`,
+  priceDesc: `priceDesc`,
+  rateDesc: `rateDesc`,
+};
+
+export const sortOptions = [`Popular`, `Price: low to high`, `Price: high to low`, `Top rated first`];

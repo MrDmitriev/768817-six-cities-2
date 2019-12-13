@@ -5,6 +5,7 @@ import {getAuthFormData} from '../selectors/user.js';
 const initialState = {
   activeCity: ``,
   activeOffer: null,
+  hoveredOffer: null,
   citiesList: [],
   isAuthorizationRequired: false,
   formAuth: {},
@@ -15,6 +16,7 @@ export const setCitiesList = (cities) => ({type: `SET_CITIES`, payload: cities})
 export const requireAuthorization = (isAuthorizationRequired) => ({type: `REQUIRE_AUTHORIZATION`, payload: isAuthorizationRequired});
 export const updateFieldValue = (fieldName, value) => ({type: `UPDATE_FIELD_VALUE`, payload: {fieldName, value}});
 export const setActiveOffer = (offerId) => ({type: `SET_ACTIVE_OFFER`, payload: offerId});
+export const setHoveredOffer = (hoveredOfferId) => ({type: `SET_HOVERED_OFFER`, payload: hoveredOfferId});
 
 export const startUpOffers = () => (dispatch, getState) => {
   const state = getState();
@@ -46,6 +48,7 @@ export const ActionCreator = {
   requireAuthorization,
   updateFieldValue,
   setActiveOffer,
+  setHoveredOffer,
 };
 
 const user = (state = initialState, action) => {
@@ -67,6 +70,9 @@ const user = (state = initialState, action) => {
 
     case `SET_ACTIVE_OFFER`:
       return Object.assign({}, state, {activeOffer: action.payload});
+
+    case `SET_HOVERED_OFFER`:
+      return Object.assign({}, state, {hoveredOffer: action.payload});
   }
 
   return state;
