@@ -26,5 +26,4 @@ describe(`reducer works correctly`, () => {
     const expectedState = Object.assign({}, initialState, {sortType: `AAA`});
     expect(newState).toEqual(expectedState);
   });
-  
 });
