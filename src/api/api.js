@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {isEmpty} from 'ramda';
 import {requireAuthorization} from '../reducers/user';
-import history from '../history/history';
+import history from '../history/history.js';
 
 const createAPI = () => {
   const api = axios.create({
@@ -15,11 +15,19 @@ const createAPI = () => {
   };
 
   const onError = (err) => {
-    if (err.response.satus === 403) {
-      return requireAuthorization(true);
+    // if (err.response.satus === 403) {
+    //   return requireAuthorization(true);
+    // }
+
+    switch (err.response.satus) {
+      case 403:
+        return requireAuthorization(true);
+      case 401:
+        console.log(`401 status`);
+        return history.push(`/login`);
     }
 
-    return history.push(`/offers-not-found`);
+    return err;
   };
 
   api.interceptors.response.use(onSuccess, onError);

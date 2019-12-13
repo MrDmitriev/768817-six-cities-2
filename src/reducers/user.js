@@ -1,6 +1,6 @@
 import {setFilteredOffers, saveAuthResponse} from './data.js';
 import {getFilteredOffers} from '../selectors/data.js';
-import {getAuthFormData} from '../selectors/user.js';
+import {getFormData, getActiveOffer} from '../selectors/user.js';
 
 const initialState = {
   activeCity: ``,
@@ -8,7 +8,7 @@ const initialState = {
   hoveredOffer: null,
   citiesList: [],
   isAuthorizationRequired: false,
-  formAuth: {},
+  form: {},
 };
 
 export const setCity = (city) => ({type: `SET_CITY`, payload: city});
@@ -17,6 +17,7 @@ export const requireAuthorization = (isAuthorizationRequired) => ({type: `REQUIR
 export const updateFieldValue = (fieldName, value) => ({type: `UPDATE_FIELD_VALUE`, payload: {fieldName, value}});
 export const setActiveOffer = (offerId) => ({type: `SET_ACTIVE_OFFER`, payload: offerId});
 export const setHoveredOffer = (hoveredOfferId) => ({type: `SET_HOVERED_OFFER`, payload: hoveredOfferId});
+export const resetForm = () => ({type: `RESET_FORM`});
 
 export const startUpOffers = () => (dispatch, getState) => {
   const state = getState();
@@ -25,7 +26,7 @@ export const startUpOffers = () => (dispatch, getState) => {
 };
 
 export const checkAuthorization = () => (dispatch, getState, api) => {
-  const formData = getAuthFormData(getState());
+  const formData = getFormData(getState());
   const {email, password} = formData;
 
   if (!email || !password) {
@@ -42,6 +43,21 @@ export const checkAuthorization = () => (dispatch, getState, api) => {
   });
 };
 
+export const sendReview = () => (dispatch, getState, api) => {
+  const formData = getFormData(getState());
+  const activeOffer = getActiveOffer(getState());
+  const {rating, comment} = formData;
+
+  return api.post(`/comments/${activeOffer}`, {
+    rating,
+    comment,
+  })
+  .then((response) => {
+    console.log(`sent`, response);
+  });
+
+};
+
 export const ActionCreator = {
   setCity,
   setCitiesList,
@@ -49,6 +65,8 @@ export const ActionCreator = {
   updateFieldValue,
   setActiveOffer,
   setHoveredOffer,
+  resetForm,
+  sendReview,
 };
 
 const user = (state = initialState, action) => {
@@ -64,15 +82,18 @@ const user = (state = initialState, action) => {
 
     case `UPDATE_FIELD_VALUE`:
       const {fieldName, value} = action.payload;
-      const formAuth = Object.assign({}, state.formAuth, {[fieldName]: value});
+      const form = Object.assign({}, state.form, {[fieldName]: value});
 
-      return Object.assign({}, state, {formAuth});
+      return Object.assign({}, state, {form});
 
     case `SET_ACTIVE_OFFER`:
       return Object.assign({}, state, {activeOffer: action.payload});
 
     case `SET_HOVERED_OFFER`:
       return Object.assign({}, state, {hoveredOffer: action.payload});
+
+    case `RESET_FORM`:
+      return Object.assign({}, state, {form: {}});
   }
 
   return state;

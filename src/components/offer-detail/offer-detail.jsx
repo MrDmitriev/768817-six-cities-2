@@ -8,11 +8,12 @@ import {Logo} from '../logo/logo.jsx';
 import {loadOffers} from '../../reducers/data.js';
 import {startUpOffers} from '../../reducers/user.js';
 import {ActionCreator} from '../../reducers/index.js';
-import {ratingTitles, cardTypes} from '../../constants/constants.js';
+import {cardTypes} from '../../constants/constants.js';
 import {ReviewsList} from '../reviews-list/reviews-list.jsx';
 import {loadReviews} from '../../reducers/data';
 import {MapSection} from '../map/map.jsx';
 import {CardOffer} from '../card-offer/card-offer.jsx';
+import ReviewForm from '../review-form/review-form.jsx';
 
 export class OfferDetail extends PureComponent {
   render() {
@@ -142,31 +143,7 @@ export class OfferDetail extends PureComponent {
                   <section className="property__reviews reviews">
                     <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                     <ReviewsList reviews={reviews} />
-                    <form className="reviews__form form" action="#" method="post">
-                      <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                      <div className="reviews__rating-form form__rating">
-                        {ratingTitles.map((item, i) => {
-                          const count = i + 1;
-                          return (
-                            <React.Fragment key={item}>
-                              <input className="form__rating-input visually-hidden" name="rating" value={count} id={`${count}-stars`} type="radio" />
-                              <label htmlFor={`${count}-stars`} className="reviews__rating-label form__rating-label" title={item}>
-                                <svg className="form__star-image" width="37" height="33">
-                                  <use xlinkHref="#icon-star"></use>
-                                </svg>
-                              </label>
-                            </React.Fragment>
-                          );
-                        })}
-                      </div>
-                      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                      <div className="reviews__button-wrapper">
-                        <p className="reviews__help">
-                          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                        </p>
-                        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
-                      </div>
-                    </form>
+                    <ReviewForm />
                   </section>
                 </div>
               </div>
@@ -220,7 +197,7 @@ export class OfferDetail extends PureComponent {
 OfferDetail.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
     })
   }),
   offer: PropTypes.object,

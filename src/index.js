@@ -6,10 +6,10 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import {compose} from 'recompose';
 
-import {cities} from './mocks/cities.js';
 import App from './components/app/app.jsx';
 import reducer from './reducers/index.js';
 import createAPI from './api/api.js';
+import history from './history/history.js';
 
 const init = () => {
   const api = createAPI((...args) => store.dispatch(...args));
@@ -23,8 +23,8 @@ const init = () => {
 
   ReactDOM.render(
       <Provider store={store}>
-        <Router>
-          <App cities={cities} />
+        <Router history={history}>
+          <App />
         </Router>
       </Provider>,
       document.querySelector(`#root`)

@@ -36,7 +36,7 @@ describe(`reducer works correctly`, () => {
     const dispatch = jest.fn();
     const getState = jest.fn();
 
-    getState.mockReturnValue({user: {formAuth: {email: `aaa@dd.cz`, password: `asdfa`}}});
+    getState.mockReturnValue({user: {form: {email: `aaa@dd.cz`, password: `asdfa`}}});
     const api = createAPI(dispatch);
     const apiMock = new MockAdapter(api);
     const login = checkAuthorization();
