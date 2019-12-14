@@ -40,6 +40,6 @@ ReviewItem.propTypes = {
       avatar_url: PropTypes.string,
     }),
     comment: PropTypes.string,
-    rating: PropTypes.string,
+    rating: PropTypes.number,
   })
 };

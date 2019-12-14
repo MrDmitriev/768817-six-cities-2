@@ -7,6 +7,7 @@ import {OfferDetail} from './offer-detail.jsx';
 Enzyme.configure({adapter: new Adapter()});
 
 it(`should load offers and set default settings`, () => {
+  const checkAuthorization = jest.fn();
   const loadOffersList = jest.fn();
   const setDefaultSettings = jest.fn();
   const loadOfferReviews = jest.fn();
@@ -16,9 +17,10 @@ it(`should load offers and set default settings`, () => {
     setDefaultSettings,
     loadOfferReviews,
     setActiveOffer,
+    checkAuthorization,
     match: {
       params: {
-        id: 1
+        id: `1`
       }
     }
   };

@@ -8,6 +8,7 @@ import {firstClosestOffer, lastClosestOffer} from '../constants/constants.js';
 export const getOffers = (state) => state.data.offers;
 export const getReviews = (state) => state.data.offerReviews;
 export const getOffer = (state, id) => state.data.offers[id - 1];
+export const getResponses = (state) => state.data.responses;
 export const getResponseAuth = (state) => state.data.responses.auth;
 
 export const getFilteredOffers = createSelector(

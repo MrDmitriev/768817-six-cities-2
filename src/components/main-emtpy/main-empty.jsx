@@ -14,9 +14,7 @@ export class MainEmpty extends PureComponent {
             <div className="container">
               <div className="header__wrapper">
                 <div className="header__left">
-                  <a className="header__logo-link header__logo-link--active">
-                    <Logo />
-                  </a>
+                  <Logo />
                 </div>
                 <nav className="header__nav">
                   <ul className="header__nav-list">

@@ -10,7 +10,7 @@ it(`should match snapshot`, () => {
       avatar_url: `BBB`,
     },
     comment: `CCC`,
-    rating: `DDD`,
+    rating: 4,
   };
   const wrapper = renderer.create(<ReviewsList reviews={[review1]} />).toJSON();
 

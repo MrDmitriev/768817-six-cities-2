@@ -14,7 +14,7 @@ const initialState = {
 };
 
 export const setOffers = (offers) => ({type: `SET_OFFERS`, payload: offers});
-export const setRviews = (reviews) => ({type: `SET_REVIEWS`, payload: reviews});
+export const setReviews = (reviews) => ({type: `SET_REVIEWS`, payload: reviews});
 export const setFilteredOffers = (offers) => ({type: `SET_FILTERED_OFFERS`, payload: offers});
 export const saveAuthResponse = (authResponse) => ({type: `SAVE_AUTH_RESPONSE`, payload: authResponse});
 
@@ -56,13 +56,17 @@ export const loadOffers = (offerId) => (dispatch, getState, api) => {
 
   return api.get(`/hotels`)
   .then((response) => {
+
+    if (isEmpty(response.data)) {
+      return history.push(`/offers-not-found`);
+    }
+
     const offers = response.data;
     let citiesList = [];
     offers.forEach((item) => {
       const cityName = item.city.name;
       return citiesList.includes(cityName) ? null : citiesList.push(cityName);
     });
-
 
     dispatch(setOffers(offers));
     dispatch(setCitiesList(citiesList));
@@ -81,15 +85,15 @@ export const loadOffers = (offerId) => (dispatch, getState, api) => {
       dispatch(setCity(defaultCity));
       dispatch(setFilteredOffers(filteredOffers));
     }
+    return true;
   });
+
 };
 
 export const loadReviews = (id) => (dispatch, getState, api) => {
   return api.get(`/comments/${id}`)
   .then((response) => {
-    const reviews = response.data;
-
-    dispatch(setRviews(reviews));
+    return !isNil(response) ? dispatch(setReviews(response.data)) : [];
   });
 };
 
@@ -100,7 +104,7 @@ export const updateOffersList = () => (dispatch, getState) => {
 
 export const ActionCreator = {
   setOffers,
-  setRviews,
+  setReviews,
   setFilteredOffers,
   loadOffers,
   sortFilteredOffers,

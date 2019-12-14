@@ -8,15 +8,18 @@ import {Logo} from '../logo/logo.jsx';
 import {loadOffers} from '../../reducers/data.js';
 import {startUpOffers} from '../../reducers/user.js';
 import {ActionCreator} from '../../reducers/index.js';
-import {ratingTitles, cardTypes} from '../../constants/constants.js';
+import {cardTypes} from '../../constants/constants.js';
 import {ReviewsList} from '../reviews-list/reviews-list.jsx';
 import {loadReviews} from '../../reducers/data';
 import {MapSection} from '../map/map.jsx';
 import {CardOffer} from '../card-offer/card-offer.jsx';
+import ReviewForm from '../review-form/review-form.jsx';
+import {getIsAuthRequired} from '../../selectors/user.js';
+import SignIn from '../sign-in/sign-in.jsx';
 
 export class OfferDetail extends PureComponent {
   render() {
-    const {offer, reviews, closestOffers, filteredOffers} = this.props;
+    const {offer, reviews, closestOffers, filteredOffers, isAuthRequired} = this.props;
     const ratingPercent = offer && (offer.rating / 5) * 100;
     return offer ? (
       <>
@@ -47,11 +50,7 @@ export class OfferDetail extends PureComponent {
                 <nav className="header__nav">
                   <ul className="header__nav-list">
                     <li className="header__nav-item user">
-                      <a className="header__nav-link header__nav-link--profile" href="#">
-                        <div className="header__avatar-wrapper user__avatar-wrapper">
-                        </div>
-                        <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      </a>
+                      <SignIn />
                     </li>
                   </ul>
                 </nav>
@@ -140,33 +139,16 @@ export class OfferDetail extends PureComponent {
                     </div>
                   </div>
                   <section className="property__reviews reviews">
-                    <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                    <h2
+                      className="reviews__title"
+                    >
+                      Reviews &middot;
+                      <span className="reviews__amount">
+                        {reviews && reviews.length}
+                      </span>
+                    </h2>
                     <ReviewsList reviews={reviews} />
-                    <form className="reviews__form form" action="#" method="post">
-                      <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                      <div className="reviews__rating-form form__rating">
-                        {ratingTitles.map((item, i) => {
-                          const count = i + 1;
-                          return (
-                            <React.Fragment key={item}>
-                              <input className="form__rating-input visually-hidden" name="rating" value={count} id={`${count}-stars`} type="radio" />
-                              <label htmlFor={`${count}-stars`} className="reviews__rating-label form__rating-label" title={item}>
-                                <svg className="form__star-image" width="37" height="33">
-                                  <use xlinkHref="#icon-star"></use>
-                                </svg>
-                              </label>
-                            </React.Fragment>
-                          );
-                        })}
-                      </div>
-                      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                      <div className="reviews__button-wrapper">
-                        <p className="reviews__help">
-                          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                        </p>
-                        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
-                      </div>
-                    </form>
+                    {!isAuthRequired && (<ReviewForm />)}
                   </section>
                 </div>
               </div>
@@ -193,7 +175,8 @@ export class OfferDetail extends PureComponent {
   }
 
   componentDidMount() {
-    const {loadOffersList, match, loadOfferReviews, setActiveOffer, setDefaultSettings} = this.props;
+    const {loadOffersList, match, loadOfferReviews, setActiveOffer, setDefaultSettings, checkAuthorization} = this.props;
+    checkAuthorization();
     setDefaultSettings();
     loadOfferReviews(match.params.id);
     setActiveOffer(Number(match.params.id));
@@ -213,14 +196,14 @@ export class OfferDetail extends PureComponent {
   componentWillUnmount() {
     const {setActiveOffer} = this.props;
     setActiveOffer(null);
-
   }
 }
 
 OfferDetail.propTypes = {
+  isAuthRequired: PropTypes.bool,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
     })
   }),
   offer: PropTypes.object,
@@ -231,6 +214,7 @@ OfferDetail.propTypes = {
   setDefaultSettings: PropTypes.func,
   loadOfferReviews: PropTypes.func,
   setActiveOffer: PropTypes.func,
+  checkAuthorization: PropTypes.func,
 };
 
 export default connect(
@@ -239,11 +223,13 @@ export default connect(
       filteredOffers: getFilteredOffers(state),
       reviews: getReviews(state),
       closestOffers: getClosestOffers(state),
+      isAuthRequired: getIsAuthRequired(state),
     }),
     (dispatch, ownProps) => ({
       loadOffersList: (id) => dispatch(loadOffers(id)),
       setDefaultSettings: () => dispatch(startUpOffers()),
       loadOfferReviews: () => dispatch(loadReviews(ownProps.match.params.id)),
       setActiveOffer: (id) => dispatch(ActionCreator.setActiveOffer(id)),
+      checkAuthorization: () => dispatch(ActionCreator.checkAuthorization()),
     })
 )(OfferDetail);

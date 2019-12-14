@@ -1,21 +1,19 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {SignIn} from './sign-in.jsx';
-
 import {Router} from 'react-router-dom';
+
+import {Login} from './login.jsx';
 import history from '../../history/history.js';
 
-it(`should match snapShot`, () => {
+it(`should match snapshot`, () => {
   const props = {
-    responses: {
-      auth: {
-        email: `aaa@bbb.cz`
-      }
-    }
+    updateFieldValue: jest.fn(),
+    login: jest.fn(),
   };
+
   const wrapper = renderer.create(
       <Router history={history}>
-        <SignIn {...props} />
+        <Login {...props} />
       </Router>
   ).toJSON();
 

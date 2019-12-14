@@ -16,17 +16,15 @@ export class CardOffer extends React.PureComponent {
     return (
       <article className={`${cardType}__${cardType === cardTypes.CITIES ? `place-` : ``}card place-card`}>
         <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
-          <a href="#">
-            <img
-              className="place-card__image"
-              src={images[0]}
-              width="260"
-              height="200"
-              alt="Place image"
-              id={offer.id}
-              onMouseEnter={handleMouseEnter}
-            />
-          </a>
+          <img
+            className="place-card__image"
+            src={images[0]}
+            width="260"
+            height="200"
+            alt="Place image"
+            id={offer.id}
+            onMouseEnter={handleMouseEnter}
+          />
         </div>
         <div className="place-card__info">
           <div className="place-card__price-wrapper">

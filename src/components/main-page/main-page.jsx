@@ -12,6 +12,8 @@ import {getResponseAuth} from '../../selectors/data.js';
 import {Logo} from '../logo/logo.jsx';
 import SortOffers from '../sort-offers/sort-offers.jsx';
 import {getHoveredOffer} from '../../selectors/user.js';
+import {ActionCreator} from '../../reducers/index.js';
+import SignIn from '../sign-in/sign-in.jsx';
 
 export class MainPage extends React.PureComponent {
   constructor(props) {
@@ -21,8 +23,6 @@ export class MainPage extends React.PureComponent {
   render() {
     const {filteredOffers, activeCity, hoveredOfferId} = this.props;
     const city = !isEmpty(filteredOffers) ? filteredOffers[0].city : {};
-    // const {email} = responseAuth;
-    // const registeredEmail = email ? email : ``;
 
     return (
           <>
@@ -53,11 +53,7 @@ export class MainPage extends React.PureComponent {
                     <nav className="header__nav">
                       <ul className="header__nav-list">
                         <li className="header__nav-item user">
-                          <a className="header__nav-link header__nav-link--profile" href="#">
-                            <div className="header__avatar-wrapper user__avatar-wrapper">
-                            </div>
-                            {/* <span className="header__user-name user__name">{registeredEmail}</span> */}
-                          </a>
+                          <SignIn />
                         </li>
                       </ul>
                     </nav>
@@ -94,7 +90,8 @@ export class MainPage extends React.PureComponent {
   }
 
   componentDidMount() {
-    const {loadOffersList, setDefaultSettings} = this.props;
+    const {loadOffersList, setDefaultSettings, checkAuthorization} = this.props;
+    checkAuthorization();
     loadOffersList();
     setDefaultSettings();
   }
@@ -110,6 +107,7 @@ MainPage.propTypes = {
   }),
   setDefaultSettings: PropTypes.func,
   loadOffersList: PropTypes.func,
+  checkAuthorization: PropTypes.func,
 };
 
 export default connect(
@@ -122,5 +120,6 @@ export default connect(
     (dispatch) => ({
       loadOffersList: () => dispatch(loadOffers()),
       setDefaultSettings: () => dispatch(startUpOffers()),
+      checkAuthorization: () => dispatch(ActionCreator.checkAuthorization()),
     })
 )(MainPage);
