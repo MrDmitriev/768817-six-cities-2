@@ -1,7 +1,7 @@
 import React from 'react';
 import Enzyme, {shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import {SignIn} from './sign-in';
+import {Login} from './login';
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -17,7 +17,7 @@ it(`should try to login after click on submit`, () => {
     preventDefault: jest.fn()
   };
 
-  const wrapper = shallow(<SignIn {...props} />);
+  const wrapper = shallow(<Login {...props} />);
 
   wrapper.find(`button`).simulate(`click`, e);
 
@@ -40,7 +40,7 @@ it(`should call updateFieldValue on change the input`, () => {
     }
   };
 
-  const wrapper = shallow(<SignIn {...props} />);
+  const wrapper = shallow(<Login {...props} />);
 
   wrapper.find(`input`).first().simulate(`change`, e);
 

@@ -1,14 +1,16 @@
-import {setFilteredOffers, saveAuthResponse} from './data.js';
+import {setFilteredOffers, saveAuthResponse, setReviews} from './data.js';
 import {getFilteredOffers} from '../selectors/data.js';
 import {getFormData, getActiveOffer} from '../selectors/user.js';
+import history from '../history/history.js';
 
 const initialState = {
   activeCity: ``,
   activeOffer: null,
   hoveredOffer: null,
   citiesList: [],
-  isAuthorizationRequired: false,
+  isAuthorizationRequired: true,
   form: {},
+  submitDefaultState: true
 };
 
 export const setCity = (city) => ({type: `SET_CITY`, payload: city});
@@ -18,6 +20,7 @@ export const updateFieldValue = (fieldName, value) => ({type: `UPDATE_FIELD_VALU
 export const setActiveOffer = (offerId) => ({type: `SET_ACTIVE_OFFER`, payload: offerId});
 export const setHoveredOffer = (hoveredOfferId) => ({type: `SET_HOVERED_OFFER`, payload: hoveredOfferId});
 export const resetForm = () => ({type: `RESET_FORM`});
+export const setSubmitButtonState = (bool) => ({type: `SET_BUTTON_STATE`, payload: bool});
 
 export const startUpOffers = () => (dispatch, getState) => {
   const state = getState();
@@ -26,6 +29,14 @@ export const startUpOffers = () => (dispatch, getState) => {
 };
 
 export const checkAuthorization = () => (dispatch, getState, api) => {
+  return api.get(`/login`)
+  .then((response) => {
+    dispatch(saveAuthResponse(response.data));
+    dispatch(requireAuthorization(false));
+  });
+};
+
+export const logIntoApp = () => (dispatch, getState, api) => {
   const formData = getFormData(getState());
   const {email, password} = formData;
 
@@ -40,6 +51,7 @@ export const checkAuthorization = () => (dispatch, getState, api) => {
   .then((response) => {
     dispatch(saveAuthResponse(response.data));
     dispatch(requireAuthorization(false));
+    return history.goBack();
   });
 };
 
@@ -53,7 +65,10 @@ export const sendReview = () => (dispatch, getState, api) => {
     comment,
   })
   .then((response) => {
-    console.log(`sent`, response);
+    const review = response.data;
+    dispatch(setSubmitButtonState(false));
+    dispatch(setReviews(review));
+    dispatch(resetForm());
   });
 
 };
@@ -67,6 +82,7 @@ export const ActionCreator = {
   setHoveredOffer,
   resetForm,
   sendReview,
+  checkAuthorization,
 };
 
 const user = (state = initialState, action) => {
@@ -93,7 +109,10 @@ const user = (state = initialState, action) => {
       return Object.assign({}, state, {hoveredOffer: action.payload});
 
     case `RESET_FORM`:
-      return Object.assign({}, state, {form: {}});
+      return Object.assign({}, state, {form: {}, submitDefaultState: true});
+
+    case `SET_BUTTON_STATE`:
+      return Object.assign({}, state, {submitDefaultState: action.payload});
   }
 
   return state;

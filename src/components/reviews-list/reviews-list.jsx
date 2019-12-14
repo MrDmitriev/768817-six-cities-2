@@ -8,7 +8,7 @@ export class ReviewsList extends PureComponent {
     const {reviews} = this.props;
     return (
       <ul className="reviews__list">
-        {reviews.map((item, i) => {
+        {reviews && reviews.map((item, i) => {
           return <ReviewItem review={item} key={item.id + i} />;
         })}
       </ul>

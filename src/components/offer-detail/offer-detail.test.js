@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer';
 import {OfferDetail} from './offer-detail.jsx';
 
 it(`should match snapShot`, () => {
+  const checkAuthorization = jest.fn();
   const loadOffersList = jest.fn();
   const setDefaultSettings = jest.fn();
   const loadOfferReviews = jest.fn();
@@ -13,9 +14,10 @@ it(`should match snapShot`, () => {
     setDefaultSettings,
     loadOfferReviews,
     setActiveOffer,
+    checkAuthorization,
     match: {
       params: {
-        id: 1
+        id: `1`
       }
     }
   };

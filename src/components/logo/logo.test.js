@@ -2,13 +2,14 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import {Logo} from './logo.jsx';
 
-import {BrowserRouter} from 'react-router-dom';
+import {Router} from 'react-router-dom';
+import history from '../../history/history.js';
 
 it(`should match snapShot`, () => {
   const wrapper = renderer.create(
-      <BrowserRouter>
+      <Router history={history}>
         <Logo />
-      </BrowserRouter>
+      </Router>
   ).toJSON();
 
   expect(wrapper).toMatchSnapshot();

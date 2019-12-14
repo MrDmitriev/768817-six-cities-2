@@ -1,31 +1,26 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {isNil} from 'ramda';
 
 import {ratingTitles} from '../../constants/constants.js';
 import {ActionCreator} from '../../reducers/index.js';
-import {getFormData} from '../../selectors/user.js';
+import {getFormData, getIsSubmitDesabled} from '../../selectors/user.js';
 
 export class ReviewForm extends PureComponent {
   render() {
-    const {formData} = this.props;
+    const {formData, isDisabled} = this.props;
     const {rating, comment} = formData;
+
     const ratingChangeHanler = (e) => {
       const {updateFieldValue} = this.props;
       const {name, value} = e.currentTarget;
       updateFieldValue(name, value);
     };
 
-    const validateForm = () => {
-      return isNil(rating) || isNil(comment) || comment.length < 50;
-    };
-
-    const isButtonDesabled = validateForm();
     const formSubmitHandler = (e) => {
+      const {sendReview} = this.props;
       e.preventDefault();
-      this.props.sendReview();
-      this.props.resetForm();
+      sendReview();
     };
 
     return (
@@ -78,7 +73,8 @@ export class ReviewForm extends PureComponent {
           <button
             className="reviews__submit form__submit button"
             type="submit"
-            disabled={isButtonDesabled}
+            disabled={isDisabled}
+            onSubmit={formSubmitHandler}
           >
             Submit
           </button>
@@ -94,16 +90,17 @@ ReviewForm.propTypes = {
     rating: PropTypes.string,
   }),
   updateFieldValue: PropTypes.func,
-  resetForm: PropTypes.func,
+  isDisabled: PropTypes.bool,
+  sendReview: PropTypes.func,
 };
 
 export default connect(
     (state) => ({
       formData: getFormData(state),
+      isDisabled: getIsSubmitDesabled(state),
     }),
     (dispatch) => ({
       updateFieldValue: (fieldName, value) => dispatch(ActionCreator.updateFieldValue(fieldName, value)),
-      resetForm: () => dispatch(ActionCreator.resetForm()),
       sendReview: () => dispatch(ActionCreator.sendReview()),
     })
 )(ReviewForm);

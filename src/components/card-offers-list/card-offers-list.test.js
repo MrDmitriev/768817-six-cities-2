@@ -1,8 +1,9 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {BrowserRouter} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 
 import {CardOffersList} from './card-offers-list.jsx';
+import history from '../../history/history.js';
 
 it(`should match snapshot`, () => {
   const offers = [{
@@ -13,9 +14,9 @@ it(`should match snapshot`, () => {
   }];
 
   const wrapper = renderer.create(
-      <BrowserRouter>
+      <Router history={history}>
         <CardOffersList offers={offers} />
-      </BrowserRouter>
+      </Router>
   ).toJSON();
 
   expect(wrapper).toMatchSnapshot();

@@ -1,8 +1,9 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {BrowserRouter} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 
 import {CardOffer} from './card-offer.jsx';
+import history from '../../history/history.js';
 
 it(`should match snapshot`, () => {
   const props = {
@@ -17,9 +18,9 @@ it(`should match snapshot`, () => {
   };
 
   const cardOffer = renderer.create(
-      <BrowserRouter>
+      <Router history={history}>
         <CardOffer {...props} />
-      </BrowserRouter>
+      </Router>
   ).toJSON();
 
   expect(cardOffer).toMatchSnapshot();

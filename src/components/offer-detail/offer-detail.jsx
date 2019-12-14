@@ -14,10 +14,12 @@ import {loadReviews} from '../../reducers/data';
 import {MapSection} from '../map/map.jsx';
 import {CardOffer} from '../card-offer/card-offer.jsx';
 import ReviewForm from '../review-form/review-form.jsx';
+import {getIsAuthRequired} from '../../selectors/user.js';
+import SignIn from '../sign-in/sign-in.jsx';
 
 export class OfferDetail extends PureComponent {
   render() {
-    const {offer, reviews, closestOffers, filteredOffers} = this.props;
+    const {offer, reviews, closestOffers, filteredOffers, isAuthRequired} = this.props;
     const ratingPercent = offer && (offer.rating / 5) * 100;
     return offer ? (
       <>
@@ -48,11 +50,7 @@ export class OfferDetail extends PureComponent {
                 <nav className="header__nav">
                   <ul className="header__nav-list">
                     <li className="header__nav-item user">
-                      <a className="header__nav-link header__nav-link--profile" href="#">
-                        <div className="header__avatar-wrapper user__avatar-wrapper">
-                        </div>
-                        <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      </a>
+                      <SignIn />
                     </li>
                   </ul>
                 </nav>
@@ -141,9 +139,16 @@ export class OfferDetail extends PureComponent {
                     </div>
                   </div>
                   <section className="property__reviews reviews">
-                    <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                    <h2
+                      className="reviews__title"
+                    >
+                      Reviews &middot;
+                      <span className="reviews__amount">
+                        {reviews && reviews.length}
+                      </span>
+                    </h2>
                     <ReviewsList reviews={reviews} />
-                    <ReviewForm />
+                    {!isAuthRequired && (<ReviewForm />)}
                   </section>
                 </div>
               </div>
@@ -170,7 +175,8 @@ export class OfferDetail extends PureComponent {
   }
 
   componentDidMount() {
-    const {loadOffersList, match, loadOfferReviews, setActiveOffer, setDefaultSettings} = this.props;
+    const {loadOffersList, match, loadOfferReviews, setActiveOffer, setDefaultSettings, checkAuthorization} = this.props;
+    checkAuthorization();
     setDefaultSettings();
     loadOfferReviews(match.params.id);
     setActiveOffer(Number(match.params.id));
@@ -190,11 +196,11 @@ export class OfferDetail extends PureComponent {
   componentWillUnmount() {
     const {setActiveOffer} = this.props;
     setActiveOffer(null);
-
   }
 }
 
 OfferDetail.propTypes = {
+  isAuthRequired: PropTypes.bool,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
@@ -208,6 +214,7 @@ OfferDetail.propTypes = {
   setDefaultSettings: PropTypes.func,
   loadOfferReviews: PropTypes.func,
   setActiveOffer: PropTypes.func,
+  checkAuthorization: PropTypes.func,
 };
 
 export default connect(
@@ -216,11 +223,13 @@ export default connect(
       filteredOffers: getFilteredOffers(state),
       reviews: getReviews(state),
       closestOffers: getClosestOffers(state),
+      isAuthRequired: getIsAuthRequired(state),
     }),
     (dispatch, ownProps) => ({
       loadOffersList: (id) => dispatch(loadOffers(id)),
       setDefaultSettings: () => dispatch(startUpOffers()),
       loadOfferReviews: () => dispatch(loadReviews(ownProps.match.params.id)),
       setActiveOffer: (id) => dispatch(ActionCreator.setActiveOffer(id)),
+      checkAuthorization: () => dispatch(ActionCreator.checkAuthorization()),
     })
 )(OfferDetail);
