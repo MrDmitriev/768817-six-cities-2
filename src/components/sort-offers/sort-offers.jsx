@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {sortOptions, sortTypes} from '../../constants/constants.js';
+import {sortOptions, SortTypes} from '../../constants/constants.js';
 import {getActiveSortType, getIsSortOpen} from '../../selectors/sort.js';
 import {ActionCreator} from '../../reducers/index.js';
 
@@ -37,8 +37,8 @@ export class SortOffers extends React.PureComponent {
         </span>
         <ul className={`places__options places__options--custom ${isOpen ? `places__options--opened` : ``}`}>
           {sortOptions.map((item, i) => {
-            const sortTypesValues = Object.values(sortTypes);
-            const currentSortType = sortTypesValues[i];
+            const SortTypesValues = Object.values(SortTypes);
+            const currentSortType = SortTypesValues[i];
             const isActive = activeSortType === currentSortType;
             return (
               <li

@@ -5,10 +5,14 @@ import {Router} from 'react-router-dom';
 import {Login} from './login.jsx';
 import history from '../../history/history.js';
 
+jest.mock(`../sign-in/sign-in.jsx`);
+
+
 it(`should match snapshot`, () => {
   const props = {
     updateFieldValue: jest.fn(),
     login: jest.fn(),
+    checkAuthorization: jest.fn(),
   };
 
   const wrapper = renderer.create(

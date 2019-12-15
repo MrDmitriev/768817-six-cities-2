@@ -1,8 +1,8 @@
-import {sortTypes} from "../constants/constants";
+import {SortTypes} from "../constants/constants";
 
 const initialState = {
   isSortOpen: false,
-  sortType: sortTypes.popular,
+  sortType: SortTypes.POPULAR,
 };
 
 export const toggleSort = () => ({type: `TOGGLE_SORT`});

@@ -2,7 +2,7 @@ import reducer from '../sort.js';
 
 const initialState = {
   isSortOpen: false,
-  sortType: `popular`,
+  sortType: `POPULAR`,
 };
 
 describe(`reducer works correctly`, () => {

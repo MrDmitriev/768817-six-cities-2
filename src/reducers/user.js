@@ -1,4 +1,4 @@
-import {setFilteredOffers, saveAuthResponse, setReviews} from './data.js';
+import {setFilteredOffers, saveAuthResponse, setReviews, loadFavoriteOffers, loadOffers} from './data.js';
 import {getFilteredOffers} from '../selectors/data.js';
 import {getFormData, getActiveOffer} from '../selectors/user.js';
 import history from '../history/history.js';
@@ -8,7 +8,7 @@ const initialState = {
   activeOffer: null,
   hoveredOffer: null,
   citiesList: [],
-  isAuthorizationRequired: true,
+  isAuthorizationRequired: false,
   form: {},
   submitDefaultState: true
 };
@@ -32,7 +32,26 @@ export const checkAuthorization = () => (dispatch, getState, api) => {
   return api.get(`/login`)
   .then((response) => {
     dispatch(saveAuthResponse(response.data));
-    dispatch(requireAuthorization(false));
+    if (response.status === 200) {
+      return dispatch(requireAuthorization(false));
+    }
+
+    return response && response.status === 200;
+  });
+};
+
+export const addToFavorite = (id, status) => (dispatch, getState, api) => {
+  dispatch(checkAuthorization());
+  return api.post(`favorite/${id}/${status}`)
+  .then((response) => {
+    if (response && response.status === 200) {
+      dispatch(loadOffers(id));
+      dispatch(loadFavoriteOffers());
+    } else if (response.response.status === 401) {
+      return history.push(`/login`);
+    }
+
+    return true;
   });
 };
 
@@ -50,8 +69,8 @@ export const logIntoApp = () => (dispatch, getState, api) => {
   })
   .then((response) => {
     dispatch(saveAuthResponse(response.data));
-    dispatch(requireAuthorization(false));
-    return history.goBack();
+    return response.status === 200 && dispatch(requireAuthorization(false));
+
   });
 };
 
@@ -65,9 +84,9 @@ export const sendReview = () => (dispatch, getState, api) => {
     comment,
   })
   .then((response) => {
-    const review = response.data;
+    const reviews = response.data;
     dispatch(setSubmitButtonState(false));
-    dispatch(setReviews(review));
+    dispatch(setReviews(reviews));
     dispatch(resetForm());
   });
 
@@ -83,6 +102,8 @@ export const ActionCreator = {
   resetForm,
   sendReview,
   checkAuthorization,
+  startUpOffers,
+  addToFavorite,
 };
 
 const user = (state = initialState, action) => {

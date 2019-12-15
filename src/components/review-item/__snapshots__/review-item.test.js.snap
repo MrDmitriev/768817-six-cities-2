@@ -54,9 +54,9 @@ exports[`should match snapshot 1`] = `
     </p>
     <time
       className="reviews__time"
-      dateTime="2019-04-24"
+      dateTime="2019-12-12"
     >
-      April 2019
+      December 2019
     </time>
   </div>
 </li>

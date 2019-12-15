@@ -1,11 +1,16 @@
 /* eslint-disable camelcase */
+import {slice} from 'ramda';
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
+import {months} from '../../constants/constants.js';
 
 export class ReviewItem extends PureComponent {
   render() {
     const {review} = this.props;
-    const ratingPercent = (review.rating / 5) * 100;
+    const ratingPercent = (Math.round(review.rating) / 5) * 100;
+    const year = slice(0, 4, review.date);
+    const month = slice(5, 7, review.date);
+    const monthName = months[month - 1];
     return (
       <li className="reviews__item">
         <div className="reviews__user user">
@@ -26,7 +31,7 @@ export class ReviewItem extends PureComponent {
           <p className="reviews__text">
             {review.comment}
           </p>
-          <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+          <time className="reviews__time" dateTime={review.date}>{`${monthName} ${year}`}</time>
         </div>
       </li>
     );
@@ -35,6 +40,7 @@ export class ReviewItem extends PureComponent {
 
 ReviewItem.propTypes = {
   review: PropTypes.shape({
+    date: PropTypes.string,
     user: PropTypes.shape({
       name: PropTypes.string,
       avatar_url: PropTypes.string,

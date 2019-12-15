@@ -5,6 +5,7 @@ import {ReviewItem} from './review-item.jsx';
 
 it(`should match snapshot`, () => {
   const review = {
+    date: `2019-12-12`,
     user: {
       name: `AAA`,
       avatar_url: `BBB`,

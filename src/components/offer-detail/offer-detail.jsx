@@ -3,12 +3,12 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {find, propEq} from 'ramda';
 
-import {getOffer, getReviews, getFilteredOffers, getClosestOffers} from '../../selectors/data.js';
+import {getOffer, getReviewList, getFilteredOffers, getClosestOffers, getReviews} from '../../selectors/data.js';
 import {Logo} from '../logo/logo.jsx';
 import {loadOffers} from '../../reducers/data.js';
 import {startUpOffers} from '../../reducers/user.js';
 import {ActionCreator} from '../../reducers/index.js';
-import {cardTypes} from '../../constants/constants.js';
+import {CardTypes, BookmarkActions} from '../../constants/constants.js';
 import {ReviewsList} from '../reviews-list/reviews-list.jsx';
 import {loadReviews} from '../../reducers/data';
 import {MapSection} from '../map/map.jsx';
@@ -19,8 +19,16 @@ import SignIn from '../sign-in/sign-in.jsx';
 
 export class OfferDetail extends PureComponent {
   render() {
-    const {offer, reviews, closestOffers, filteredOffers, isAuthRequired} = this.props;
-    const ratingPercent = offer && (offer.rating / 5) * 100;
+    const {offer, reviews, reviewList, closestOffers, filteredOffers, isAuthRequired} = this.props;
+    const ratingPercent = offer && (Math.round(offer.rating) / 5) * 100;
+
+    const handleBookmarkClick = () => {
+      const {ADD, REMOVE} = BookmarkActions;
+      const status = offer.is_favorite ? REMOVE : ADD;
+      const {addToFavorite, match} = this.props;
+      addToFavorite(match.params.id, status);
+    };
+
     return offer ? (
       <>
         <div style={{display: `none`}}>
@@ -73,18 +81,23 @@ export class OfferDetail extends PureComponent {
               </div>
               <div className="property__container container">
                 <div className="property__wrapper">
-                  <div className="property__mark">
+                  {offer.is_premium && (<div className="property__mark">
                     <span>Premium</span>
-                  </div>
+                  </div>)}
                   <div className="property__name-wrapper">
                     <h1 className="property__name">
                       {offer.title}
                     </h1>
-                    <button className="property__bookmark-button button" type="button">
-                      <svg className="property__bookmark-icon" width="31" height="33">
+                    <button
+                      style={{position: `absolute`, top: `41px`, right: `93px`}}
+                      className={`place-card__bookmark-button place-card__bookmark-button${offer.is_favorite ? `--active` : ``} button`}
+                      type="button"
+                      onClick={handleBookmarkClick}
+                    >
+                      <svg className="place-card__bookmark-icon" width="31" height="33">
                         <use xlinkHref="#icon-bookmark"></use>
                       </svg>
-                      <span className="visually-hidden">To bookmarks</span>
+                      <span className="visually-hidden">In bookmarks</span>
                     </button>
                   </div>
                   <div className="property__rating rating">
@@ -92,7 +105,7 @@ export class OfferDetail extends PureComponent {
                       <span style={{width: `${ratingPercent}%`}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
-                    <span className="property__rating-value rating__value">{offer.rating}</span>
+                    <span className="property__rating-value rating__value">{Math.round(offer.rating)}</span>
                   </div>
                   <ul className="property__features">
                     <li className="property__feature property__feature--entire">
@@ -147,13 +160,13 @@ export class OfferDetail extends PureComponent {
                         {reviews && reviews.length}
                       </span>
                     </h2>
-                    <ReviewsList reviews={reviews} />
+                    <ReviewsList reviews={reviewList} />
                     {!isAuthRequired && (<ReviewForm />)}
                   </section>
                 </div>
               </div>
               <section className="property__map map">
-                <MapSection offers={closestOffers} city={offer.city} />
+                <MapSection offers={closestOffers} city={offer.city} currentOffer={offer} />
 
               </section>
             </section>
@@ -163,7 +176,12 @@ export class OfferDetail extends PureComponent {
                 <div className="near-places__list places__list">
                   {closestOffers && closestOffers.map((item) => {
                     const offerItem = find(propEq(`id`, item.id))(filteredOffers);
-                    return <CardOffer offer={offerItem} key={offerItem.id} cardType={cardTypes.NEAR_PLACES}/>;
+                    return <CardOffer
+                      onBookmarkClick={handleBookmarkClick}
+                      offer={offerItem}
+                      key={offerItem.id}
+                      cardType={CardTypes.NEAR_PLACES}
+                    />;
                   })}
                 </div>
               </section>
@@ -208,6 +226,7 @@ OfferDetail.propTypes = {
   }),
   offer: PropTypes.object,
   reviews: PropTypes.array,
+  reviewList: PropTypes.array,
   filteredOffers: PropTypes.array,
   closestOffers: PropTypes.array,
   loadOffersList: PropTypes.func,
@@ -215,17 +234,20 @@ OfferDetail.propTypes = {
   loadOfferReviews: PropTypes.func,
   setActiveOffer: PropTypes.func,
   checkAuthorization: PropTypes.func,
+  addToFavorite: PropTypes.func,
 };
 
 export default connect(
     (state, ownProps) => ({
       offer: getOffer(state, ownProps.match.params.id),
       filteredOffers: getFilteredOffers(state),
+      reviewList: getReviewList(state),
       reviews: getReviews(state),
       closestOffers: getClosestOffers(state),
       isAuthRequired: getIsAuthRequired(state),
     }),
     (dispatch, ownProps) => ({
+      addToFavorite: (id, status) => dispatch(ActionCreator.addToFavorite(id, status)),
       loadOffersList: (id) => dispatch(loadOffers(id)),
       setDefaultSettings: () => dispatch(startUpOffers()),
       loadOfferReviews: () => dispatch(loadReviews(ownProps.match.params.id)),

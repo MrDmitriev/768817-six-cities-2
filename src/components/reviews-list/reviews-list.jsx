@@ -9,7 +9,7 @@ export class ReviewsList extends PureComponent {
     return (
       <ul className="reviews__list">
         {reviews && reviews.map((item, i) => {
-          return <ReviewItem review={item} key={item.id + i} />;
+          return <ReviewItem review={item} key={i} />;
         })}
       </ul>
     );

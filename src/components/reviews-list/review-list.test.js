@@ -5,6 +5,7 @@ import {ReviewsList} from './reviews-list.jsx';
 
 it(`should match snapshot`, () => {
   const review1 = {
+    date: `2019-12-12`,
     user: {
       name: `AAA`,
       avatar_url: `BBB`,

@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import {ActionCreator} from '../../reducers/index.js';
 import {logIntoApp} from '../../reducers/user.js';
 import {Logo} from '../logo/logo.jsx';
+import {getIsAuthRequired} from '../../selectors/user.js';
+import history from '../../history/history.js';
+import SignIn from '../sign-in/sign-in.jsx';
 
 export class Login extends PureComponent {
   render() {
@@ -51,11 +54,7 @@ export class Login extends PureComponent {
                 <nav className="header__nav">
                   <ul className="header__nav-list">
                     <li className="header__nav-item user">
-                      <a className="header__nav-link header__nav-link--profile" href="#">
-                        <div className="header__avatar-wrapper user__avatar-wrapper">
-                        </div>
-                        <span className="header__login">Sign in</span>
-                      </a>
+                      <SignIn />
                     </li>
                   </ul>
                 </nav>
@@ -112,17 +111,37 @@ export class Login extends PureComponent {
       </>
     );
   }
+
+  componentDidMount() {
+    const {isAuthRequired, checkAuthorization} = this.props;
+    checkAuthorization();
+    return isAuthRequired ? true : history.push(`/`);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {isAuthRequired} = this.props;
+    if (prevProps.isAuthRequired !== this.props.isAuthRequired) {
+      return isAuthRequired ? true : history.push(`/`);
+    }
+
+    return true;
+  }
 }
 
 Login.propTypes = {
+  isAuthRequired: PropTypes.bool,
   updateFieldValue: PropTypes.func,
   login: PropTypes.func,
+  checkAuthorization: PropTypes.func,
 };
 
 export default connect(
-    null,
+    (state) => ({
+      isAuthRequired: getIsAuthRequired(state),
+    }),
     (dispatch) => ({
       updateFieldValue: (fieldName, value) => dispatch(ActionCreator.updateFieldValue(fieldName, value)),
       login: () => dispatch(logIntoApp()),
+      checkAuthorization: () => dispatch(ActionCreator.checkAuthorization()),
     })
 )(Login);

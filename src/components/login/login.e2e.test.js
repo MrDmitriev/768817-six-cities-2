@@ -10,6 +10,7 @@ it(`should try to login after click on submit`, () => {
   const login = jest.fn();
   const props = {
     updateFieldValue: jest.fn(),
+    checkAuthorization: jest.fn(),
     login,
   };
 
@@ -31,6 +32,7 @@ it(`should call updateFieldValue on change the input`, () => {
   const props = {
     updateFieldValue,
     login,
+    checkAuthorization: jest.fn(),
   };
 
   const e = {
