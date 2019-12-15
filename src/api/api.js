@@ -1,6 +1,6 @@
 import axios from 'axios';
+import {isNil} from 'ramda';
 import {requireAuthorization, setSubmitButtonState} from '../reducers/user.js';
-import history from '../history/history.js';
 
 const createAPI = (dispatch) => {
   const api = axios.create({
@@ -14,10 +14,10 @@ const createAPI = (dispatch) => {
   };
 
   const onError = (err) => {
-    if (err.response.status === 401) {
-      history.push(`/login`);
-      requireAuthorization(true);
-    } else if (err.response.status === 400) {
+    const errStatus = err.response.status;
+    if (!isNil(errStatus) && errStatus === 401) {
+      dispatch(requireAuthorization(true));
+    } else if (!isNil(errStatus) && errStatus === 400) {
       dispatch(setSubmitButtonState(true));
     }
     return err;

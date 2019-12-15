@@ -10,7 +10,7 @@ const setSortType = jest.fn();
 const sortFilteredOffers = jest.fn();
 
 const props = {
-  activeSortType: `popular`,
+  activeSortType: `POPULAR`,
   isOpen: true,
   toggleSort,
   setSortType,

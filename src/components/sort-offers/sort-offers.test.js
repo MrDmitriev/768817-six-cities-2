@@ -8,7 +8,7 @@ it(`should match snapshot`, () => {
   const sortFilteredOffers = jest.fn();
 
   const props = {
-    activeSortType: `popular`,
+    activeSortType: `POPULAR`,
     isOpen: true,
     toggleSort,
     setSortType,

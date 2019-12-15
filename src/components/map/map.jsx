@@ -55,7 +55,7 @@ export class MapSection extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    const {offers, city, hoveredOfferId} = this.props;
+    const {offers, city, hoveredOfferId, currentOffer} = this.props;
     this.markersLayer.clearLayers();
     let lat = 0;
     let long = 0;
@@ -80,12 +80,19 @@ export class MapSection extends React.PureComponent {
     let a = Array.from(
         offers.map((item) => {
           const position = item ? [item.location.latitude, item.location.longitude] : [0, 0];
-          if (item.id === Number(hoveredOfferId)) {
+          if (item.id === Number(hoveredOfferId) || item.id === currentOffer) {
             return leaflet.marker(position, {icon: hoveredIcon});
           }
           return leaflet.marker(position, {icon});
         })
     );
+
+    if (currentOffer) {
+      const position = [currentOffer.location.latitude, currentOffer.location.longitude];
+
+      a.push(leaflet.marker(position, {icon: hoveredIcon}));
+    }
+
     this.markersLayer = leaflet.layerGroup(a).addTo(this.mapLeaf);
   }
 }
@@ -93,6 +100,12 @@ export class MapSection extends React.PureComponent {
 MapSection.propTypes = {
   offers: PropTypes.array,
   hoveredOfferId: PropTypes.string,
+  currentOffer: PropTypes.shape({
+    location: PropTypes.shape({
+      latitude: PropTypes.number,
+      longitude: PropTypes.number,
+    }),
+  }),
   city: PropTypes.shape({
     location: PropTypes.shape({
       latitude: PropTypes.number,

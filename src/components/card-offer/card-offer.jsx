@@ -1,20 +1,30 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {cardTypes} from '../../constants/constants.js';
+import {CardTypes, BookmarkActions} from '../../constants/constants.js';
 
 export class CardOffer extends React.PureComponent {
   render() {
-    const {offer, mouseEnterHandler, cardType} = this.props;
-    const {title, price, type, images, rating} = offer;
-    const ratingPercent = (rating / 5) * 100;
+    const {offer, mouseEnterHandler, cardType, onBookmarkClick} = this.props;
+    const {title, price, type, images, rating, is_favorite, id, is_premium} = offer;
+    const ratingPercent = (Math.round(rating) / 5) * 100;
 
     const handleMouseEnter = (e) => {
-      mouseEnterHandler(e.currentTarget.id);
+      return mouseEnterHandler && mouseEnterHandler(e.currentTarget.id);
+    };
+
+    const handleBookmarkClick = () => {
+      const {ADD, REMOVE} = BookmarkActions;
+      const status = is_favorite ? REMOVE : ADD;
+      onBookmarkClick(id, status);
     };
 
     return (
-      <article className={`${cardType}__${cardType === cardTypes.CITIES ? `place-` : ``}card place-card`}>
+      <article className={`${cardType}__${cardType === CardTypes.CITIES ? `place-` : ``}card place-card`}>
+        {is_premium && (<div className="place-card__mark">
+          <span>Premium</span>
+        </div>)}
         <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
           <img
             className="place-card__image"
@@ -26,13 +36,17 @@ export class CardOffer extends React.PureComponent {
             onMouseEnter={handleMouseEnter}
           />
         </div>
-        <div className="place-card__info">
+        <div className={`${cardType === CardTypes.FAVORITES ? `__card-info` : ``} place-card__info`}>
           <div className="place-card__price-wrapper">
             <div className="place-card__price">
               <b className="place-card__price-value">&euro;{price}</b>
               <span className="place-card__price-text">&#47;&nbsp;night</span>
             </div>
-            <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+            <button
+              className={`place-card__bookmark-button place-card__bookmark-button${is_favorite ? `--active` : ``} button`}
+              type="button"
+              onClick={handleBookmarkClick}
+            >
               <svg className="place-card__bookmark-icon" width="18" height="19">
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>
@@ -59,6 +73,11 @@ CardOffer.propTypes = {
   offerName: PropTypes.string,
   cardType: PropTypes.string,
   mouseEnterHandler: PropTypes.func,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    })
+  }),
   offer: PropTypes.shape({
     title: PropTypes.string,
     price: PropTypes.number,
@@ -66,5 +85,8 @@ CardOffer.propTypes = {
     images: PropTypes.array,
     id: PropTypes.number,
     rating: PropTypes.number,
+    is_favorite: PropTypes.bool,
+    is_premium: PropTypes.bool,
   }),
+  onBookmarkClick: PropTypes.func,
 };

@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {CardOffer} from '../card-offer/card-offer.jsx';
-import {cardTypes} from '../../constants/constants.js';
+import {CardTypes} from '../../constants/constants.js';
 import {ActionCreator} from '../../reducers/index.js';
 
 export const CardOffersList = (props) => {
-  const {offers, setHoveredOffer} = props;
-
+  const {offers, setHoveredOffer, addToFavorite} = props;
   return (
     offers.map((item, i) => {
       const uniqueName = `offer-${i + 1}`;
@@ -17,8 +16,9 @@ export const CardOffersList = (props) => {
         offer={item}
         offerName={uniqueName}
         id={item.id}
-        cardType={cardTypes.CITIES}
+        cardType={CardTypes.CITIES}
         mouseEnterHandler={setHoveredOffer}
+        onBookmarkClick={addToFavorite}
       />;
     })
   );
@@ -33,6 +33,7 @@ export default connect(
       offers: state.data.filteredOffers,
     }),
     (dispatch) => ({
+      addToFavorite: (id, status) => dispatch(ActionCreator.addToFavorite(id, status)),
       setHoveredOffer: (id) => dispatch(ActionCreator.setHoveredOffer(id)),
     })
 )(CardOffersList);

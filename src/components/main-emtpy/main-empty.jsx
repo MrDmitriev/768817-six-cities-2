@@ -1,5 +1,10 @@
 import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+
 import {Logo} from '../logo/logo.jsx';
+import SignIn from '../sign-in/sign-in.jsx';
+import {ActionCreator} from '../../reducers/index.js';
 
 export class MainEmpty extends PureComponent {
   render() {
@@ -19,11 +24,7 @@ export class MainEmpty extends PureComponent {
                 <nav className="header__nav">
                   <ul className="header__nav-list">
                     <li className="header__nav-item user">
-                      <a className="header__nav-link header__nav-link--profile" href="#">
-                        <div className="header__avatar-wrapper user__avatar-wrapper">
-                        </div>
-                        <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      </a>
+                      <SignIn />
                     </li>
                   </ul>
                 </nav>
@@ -85,4 +86,19 @@ export class MainEmpty extends PureComponent {
       </>
     );
   }
+
+  componentDidMount() {
+    return this.props.checkAuthorization();
+  }
 }
+
+MainEmpty.propTypes = {
+  checkAuthorization: PropTypes.func
+};
+
+export default connect(
+    null,
+    (dispatch) => ({
+      checkAuthorization: () => dispatch(ActionCreator.checkAuthorization()),
+    })
+)(MainEmpty);

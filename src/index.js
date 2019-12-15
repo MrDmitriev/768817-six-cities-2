@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import {compose} from 'recompose';
 
-import App from './components/app/app.jsx';
+import {App} from './components/app/app.jsx';
 import reducer from './reducers/index.js';
 import createAPI from './api/api.js';
 import history from './history/history.js';
