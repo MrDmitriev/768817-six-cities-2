@@ -17,7 +17,7 @@ export const CardOffersList = (props) => {
         offerName={uniqueName}
         id={item.id}
         cardType={CardTypes.CITIES}
-        mouseEnterHandler={setHoveredOffer}
+        onMouseEnter={setHoveredOffer}
         onBookmarkClick={addToFavorite}
       />;
     })

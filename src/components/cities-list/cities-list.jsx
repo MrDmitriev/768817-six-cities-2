@@ -8,7 +8,8 @@ import {updateOffersList as updateOffers} from '../../reducers/data.js';
 export class CitiesList extends PureComponent {
   render() {
     const {cities, activeCity, setActiveCity, updateOffersList} = this.props;
-    const onItemClickHandler = (e) => {
+
+    const handleItemClick = (e) => {
       const cityName = e.currentTarget.id;
       setActiveCity(cityName);
       updateOffersList();
@@ -24,7 +25,7 @@ export class CitiesList extends PureComponent {
                 <a
                   className={`locations__item-link tabs__item ${isActive ? `tabs__item--active` : ``}`}
                   id={item}
-                  onClick={onItemClickHandler}
+                  onClick={handleItemClick}
                 >
                   <span>{item}</span>
                 </a>

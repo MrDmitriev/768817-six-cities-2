@@ -80,8 +80,13 @@ describe(`reducer works correctly`, () => {
     const dispatch = jest.fn();
     const getState = jest.fn();
 
-    getState.mockReturnValue({user: {form: {email: `aaa@dd.cz`, password: `asdfa`}}, activeOffer: 1});
-
+    const mockState = {
+      user: {
+        form: {email: `aaa@dd.cz`, password: `asdfa`},
+        activeOffer: 1
+      }
+    };
+    getState.mockReturnValue(mockState);
     const api = createAPI(dispatch);
     const apiMock = new MockAdapter(api);
     const send = sendReview();
@@ -97,7 +102,7 @@ describe(`reducer works correctly`, () => {
     return send(dispatch, getState, api)
     .then(() => {
       expect(dispatch).toHaveBeenCalledTimes(3);
-      expect(dispatch).toHaveBeenNthCalledWith(2, {type: `SET_REVIEWS`});
+      expect(dispatch).toHaveBeenNthCalledWith(3, {type: `SET_REVIEWS`});
     });
   });
 

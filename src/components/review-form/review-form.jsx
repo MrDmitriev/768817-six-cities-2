@@ -17,7 +17,7 @@ export class ReviewForm extends PureComponent {
       updateFieldValue(name, value);
     };
 
-    const formSubmitHandler = (e) => {
+    const handleFormSubmit = (e) => {
       const {sendReview} = this.props;
       e.preventDefault();
       sendReview();
@@ -28,7 +28,7 @@ export class ReviewForm extends PureComponent {
         className="reviews__form form"
         action="#"
         method="post"
-        onSubmit={formSubmitHandler}
+        onSubmit={handleFormSubmit}
       >
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
@@ -74,7 +74,7 @@ export class ReviewForm extends PureComponent {
             className="reviews__submit form__submit button"
             type="submit"
             disabled={isDisabled}
-            onSubmit={formSubmitHandler}
+            onSubmit={handleFormSubmit}
           >
             Submit
           </button>

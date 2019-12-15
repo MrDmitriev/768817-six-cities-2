@@ -10,17 +10,17 @@ export class SortOffers extends React.PureComponent {
   render() {
     const {activeSortType, isOpen} = this.props;
 
-    const handleClick = () => {
+    const handleDocumentClick = () => {
       this.props.toggleSort();
-      document.removeEventListener(`click`, handleClick);
+      document.removeEventListener(`click`, handleDocumentClick);
     };
 
-    const onSortClickHandler = () => {
+    const handleSortClick = () => {
       this.props.toggleSort();
-      document.addEventListener(`click`, handleClick);
+      document.addEventListener(`click`, handleDocumentClick);
     };
 
-    const onSortChangeHandler = (e) => {
+    const handleSortTypeClick = (e) => {
       const {setSortType, sortFilteredOffers} = this.props;
       setSortType(e.currentTarget.id);
       sortFilteredOffers();
@@ -29,7 +29,7 @@ export class SortOffers extends React.PureComponent {
     return (
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by</span>
-        <span onClick={onSortClickHandler} className="places__sorting-type" tabIndex="0">
+        <span onClick={handleSortClick} className="places__sorting-type" tabIndex="0">
         Popular
           <svg className="places__sorting-arrow" width="7" height="4">
             <use xlinkHref="#icon-arrow-select"></use>
@@ -46,7 +46,7 @@ export class SortOffers extends React.PureComponent {
                 tabIndex={i}
                 key={item}
                 id={currentSortType}
-                onClick={onSortChangeHandler}
+                onClick={handleSortTypeClick}
               >
                 {item}
               </li>

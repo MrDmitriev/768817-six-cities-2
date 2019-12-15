@@ -6,12 +6,12 @@ import {CardTypes, BookmarkActions} from '../../constants/constants.js';
 
 export class CardOffer extends React.PureComponent {
   render() {
-    const {offer, mouseEnterHandler, cardType, onBookmarkClick} = this.props;
+    const {offer, onMouseEnter, cardType, onBookmarkClick} = this.props;
     const {title, price, type, images, rating, is_favorite, id, is_premium} = offer;
     const ratingPercent = (Math.round(rating) / 5) * 100;
 
     const handleMouseEnter = (e) => {
-      return mouseEnterHandler && mouseEnterHandler(e.currentTarget.id);
+      return onMouseEnter && onMouseEnter(e.currentTarget.id);
     };
 
     const handleBookmarkClick = () => {
@@ -72,7 +72,7 @@ export class CardOffer extends React.PureComponent {
 CardOffer.propTypes = {
   offerName: PropTypes.string,
   cardType: PropTypes.string,
-  mouseEnterHandler: PropTypes.func,
+  onMouseEnter: PropTypes.func,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
