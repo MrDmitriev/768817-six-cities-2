@@ -93,7 +93,7 @@ describe(`reducer works correctly`, () => {
       });
   });
 
-  it('should set reviews by a given data', () => {
+  it(`should set reviews by a given data`, () => {
     const action = {type: `SET_REVIEWS`, payload: [1, 2, 3]};
     const newState = reducer(initialState, action);
     const expectedState = Object.assign({}, initialState, {offerReviews: [1, 2, 3]});
@@ -101,20 +101,20 @@ describe(`reducer works correctly`, () => {
     expect(newState).toEqual(expectedState);
   });
 
-  it('should save a response with auth info from BE', () => {
+  it(`should save a response with auth info from BE`, () => {
     const action = {type: `SAVE_AUTH_RESPONSE`, payload: `aaa`};
     const newState = reducer(initialState, action);
     const expectedState = Object.assign({}, initialState, {responses: {auth: `aaa`}});
 
     expect(newState).toEqual(expectedState);
   });
-  
-  it('should save favourite offers sgiven by BE', () => {
+
+  it(`should save favourite offers sgiven by BE`, () => {
     const action = {type: `SET_FAVORITE_OFFERS`, payload: [1, 2, 3]};
     const newState = reducer(initialState, action);
     const expectedState = Object.assign({}, initialState, {favoriteOffers: [1, 2, 3]});
 
     expect(newState).toEqual(expectedState);
   });
-  
+
 });

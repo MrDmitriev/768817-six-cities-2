@@ -32,11 +32,7 @@ export const checkAuthorization = () => (dispatch, getState, api) => {
   return api.get(`/login`)
   .then((response) => {
     dispatch(saveAuthResponse(response.data));
-    if (response.status === 200) {
-      return dispatch(requireAuthorization(false));
-    }
-
-    return response && response.status === 200;
+    return response ? dispatch(requireAuthorization(false)) : false;
   });
 };
 
@@ -44,10 +40,10 @@ export const addToFavorite = (id, status) => (dispatch, getState, api) => {
   dispatch(checkAuthorization());
   return api.post(`favorite/${id}/${status}`)
   .then((response) => {
-    if (response && response.status === 200) {
+    if (response) {
       dispatch(loadOffers(id));
       dispatch(loadFavoriteOffers());
-    } else if (response.response.status === 401) {
+    } else {
       return history.push(`/login`);
     }
 
@@ -69,8 +65,7 @@ export const logIntoApp = () => (dispatch, getState, api) => {
   })
   .then((response) => {
     dispatch(saveAuthResponse(response.data));
-    return response.status === 200 && dispatch(requireAuthorization(false));
-
+    return response ? dispatch(requireAuthorization(false)) : false;
   });
 };
 
@@ -84,12 +79,10 @@ export const sendReview = () => (dispatch, getState, api) => {
     comment,
   })
   .then((response) => {
-    const reviews = response.data;
     dispatch(setSubmitButtonState(false));
-    dispatch(setReviews(reviews));
     dispatch(resetForm());
+    dispatch(setReviews(response.data));
   });
-
 };
 
 export const ActionCreator = {

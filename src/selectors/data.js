@@ -1,9 +1,10 @@
 import {createSelector} from 'reselect';
-import {isNil, isEmpty, propEq, find, slice, prop, sort, descend} from 'ramda';
+import {isNil, isEmpty, slice, prop, sort, descend} from 'ramda';
 import sortByDistance from 'sort-by-distance';
 
 import {getActviveCity, getActiveOffer} from './user.js';
 import {firstClosestOffer, lastClosestOffer} from '../constants/constants.js';
+import {findOfferById} from '../utils/utils.js';
 
 export const getOffers = (state) => state.data.offers;
 export const getReviews = (state) => state.data.offerReviews;
@@ -102,7 +103,7 @@ export const getClosestOffers = createSelector(
 
       if (!isEmpty(restructuredOffers) && !isNil(offerId)) {
 
-        targetOffer = find(propEq(`id`, offerId))(restructuredOffers);
+        targetOffer = findOfferById(restructuredOffers, offerId);
         const origin = {longitude: targetOffer.longitude, latitude: targetOffer.latitude};
         sortedByDistance = sortByDistance(origin, restructuredOffers, opts);
       }
