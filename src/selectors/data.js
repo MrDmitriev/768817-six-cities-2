@@ -3,7 +3,7 @@ import {isNil, isEmpty, slice, prop, sort, descend} from 'ramda';
 import sortByDistance from 'sort-by-distance';
 
 import {getActviveCity, getActiveOffer} from './user.js';
-import {firstClosestOffer, lastClosestOffer} from '../constants/constants.js';
+import {FIRST_CLOSEST_OFFER, LAST_CLOSEST_OFFER} from '../constants/constants.js';
 import {findOfferById} from '../utils/utils.js';
 
 export const getOffers = (state) => state.data.offers;
@@ -113,6 +113,6 @@ export const getClosestOffers = createSelector(
           sortedOffersByDistance.push({id: item.id, location: {latitude: item.latitude, longitude: item.longitude}});
         });
       }
-      return slice(firstClosestOffer, lastClosestOffer, sortedOffersByDistance);
+      return slice(FIRST_CLOSEST_OFFER, LAST_CLOSEST_OFFER, sortedOffersByDistance);
     }
 );

@@ -24,7 +24,7 @@ export class OfferDetail extends PureComponent {
 
     const handleBookmarkClick = () => {
       const {ADD, REMOVE} = BookmarkActions;
-      const status = offer.is_favorite ? REMOVE : ADD;
+      const status = offer.isFavorite ? REMOVE : ADD;
       const {addToFavorite, match} = this.props;
       addToFavorite(match.params.id, status);
     };
@@ -81,7 +81,7 @@ export class OfferDetail extends PureComponent {
               </div>
               <div className="property__container container">
                 <div className="property__wrapper">
-                  {offer.is_premium && (<div className="property__mark">
+                  {offer.isPremium && (<div className="property__mark">
                     <span>Premium</span>
                   </div>)}
                   <div className="property__name-wrapper">
@@ -90,7 +90,7 @@ export class OfferDetail extends PureComponent {
                     </h1>
                     <button
                       style={{position: `absolute`, top: `41px`, right: `93px`}}
-                      className={`place-card__bookmark-button place-card__bookmark-button${offer.is_favorite ? `--active` : ``} button`}
+                      className={`place-card__bookmark-button place-card__bookmark-button${offer.isFavorite ? `--active` : ``} button`}
                       type="button"
                       onClick={handleBookmarkClick}
                     >
@@ -115,7 +115,7 @@ export class OfferDetail extends PureComponent {
                       {`${offer.bedrooms} ${offer.bedrooms > 1 ? `bedrooms` : `bedroom`}`}
                     </li>
                     <li className="property__feature property__feature--adults">
-                      {`Max ${offer.max_adults} adult${offer.max_adults > 1 ? `s` : ``}`}
+                      {`Max ${offer.maxAdults} adult${offer.maxAdults > 1 ? `s` : ``}`}
                     </li>
                   </ul>
                   <div className="property__price">
@@ -137,15 +137,15 @@ export class OfferDetail extends PureComponent {
                   <div className="property__host">
                     <h2 className="property__host-title">Meet the host</h2>
                     <div className="property__host-user user">
-                      <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                        <img className="property__avatar user__avatar" src={`../${offer.host.avatar_url}`} width="74" height="74" alt="Host avatar" />
+                      <div className={`property__avatar-wrapper property__avatar-wrapper${offer.host.isPro && `--pro`} user__avatar-wrapper`}>
+                        <img className="property__avatar user__avatar" src={`../${offer.host.avatarUrl}`} width="74" height="74" alt="Host avatar" />
                       </div>
                       <span className="property__user-name">
                         Angelina
                       </span>
-                      <span className="property__user-status">
+                      {offer.host.isPro && (<span className="property__user-status">
                         Pro
-                      </span>
+                      </span>)}
                     </div>
                     <div className="property__description">
                       <p className="property__text">{offer.description}</p>

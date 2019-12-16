@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {prop} from 'ramda';
+import {prop, isNil, isEmpty} from 'ramda';
 import PropTypes from 'prop-types';
 
 import {FavoriteCitySection} from '../favorite-city-section/favorite-city-section.jsx';
@@ -67,7 +67,12 @@ export class Favorites extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const {loadFavoriteOffers, isAuthRequired} = this.props;
+    const {loadFavoriteOffers, isAuthRequired, favoriteOffers} = this.props;
+
+    if (!isNil(favoriteOffers) && isEmpty(favoriteOffers)) {
+      history.push(`/favorites-not-found`);
+    }
+
     if (prevProps.isAuthRequired !== this.props.isAuthRequired) {
       return isAuthRequired ? history.push(`/login`) : loadFavoriteOffers();
     }

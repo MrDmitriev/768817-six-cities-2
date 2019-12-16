@@ -79,9 +79,24 @@ export const sendReview = () => (dispatch, getState, api) => {
     comment,
   })
   .then((response) => {
+    const reviews = response.data;
+    let formatedReviews = [];
+
+    reviews.map((item) => {
+      const user = {
+        user: {
+          isPro: item.user.is_pro,
+          id: item.user.id,
+          name: item.user.name,
+          avatarUrl: item.user.avatar_url
+        }
+      };
+      const newObj = Object.assign(item, user);
+      return formatedReviews.push(newObj);
+    });
     dispatch(setSubmitButtonState(false));
     dispatch(resetForm());
-    dispatch(setReviews(response.data));
+    dispatch(setReviews(formatedReviews));
   });
 };
 

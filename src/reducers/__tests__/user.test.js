@@ -95,7 +95,13 @@ describe(`reducer works correctly`, () => {
       {
         rating: 2,
         comment: `aaa`,
-        date: `2019-05-08T14:13:56.569Z`
+        date: `2019-05-08T14:13:56.569Z`,
+        user: {
+          id: 4,
+          isPro: false,
+          name: `Max`,
+          avatarUrl: `aaa`
+        },
       }
     ]);
 

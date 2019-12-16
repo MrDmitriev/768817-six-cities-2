@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {requireAuthorization, setSubmitButtonState} from '../reducers/user.js';
-import {ResponseCodes} from 'c:/Users/extre/AppData/Local/Temp/Temp1_68889.zip/project-68889/src/constants/constants.js';
+import {ResponseCodes} from '../constants/constants.js';
 
 const createAPI = (dispatch) => {
   const api = axios.create({
