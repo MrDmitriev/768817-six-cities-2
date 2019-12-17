@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {ReviewsList} from './reviews-list.jsx';
@@ -8,7 +7,7 @@ it(`should match snapshot`, () => {
     date: `2019-12-12`,
     user: {
       name: `AAA`,
-      avatar_url: `BBB`,
+      avatarUrl: `BBB`,
     },
     comment: `CCC`,
     rating: 4,

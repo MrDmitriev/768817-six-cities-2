@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
@@ -7,7 +6,7 @@ import {CardTypes, BookmarkActions} from '../../constants/constants.js';
 export class CardOffer extends React.PureComponent {
   render() {
     const {offer, onMouseEnter, cardType, onBookmarkClick} = this.props;
-    const {title, price, type, images, rating, is_favorite, id, is_premium} = offer;
+    const {title, price, type, images, rating, isFavorite, id, isPremium} = offer;
     const ratingPercent = (Math.round(rating) / 5) * 100;
 
     const handleMouseEnter = (e) => {
@@ -16,13 +15,13 @@ export class CardOffer extends React.PureComponent {
 
     const handleBookmarkClick = () => {
       const {ADD, REMOVE} = BookmarkActions;
-      const status = is_favorite ? REMOVE : ADD;
+      const status = isFavorite ? REMOVE : ADD;
       onBookmarkClick(id, status);
     };
 
     return (
       <article className={`${cardType}__${cardType === CardTypes.CITIES ? `place-` : ``}card place-card`}>
-        {is_premium && (<div className="place-card__mark">
+        {isPremium && (<div className="place-card__mark">
           <span>Premium</span>
         </div>)}
         <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
@@ -43,7 +42,7 @@ export class CardOffer extends React.PureComponent {
               <span className="place-card__price-text">&#47;&nbsp;night</span>
             </div>
             <button
-              className={`place-card__bookmark-button place-card__bookmark-button${is_favorite ? `--active` : ``} button`}
+              className={`place-card__bookmark-button place-card__bookmark-button${isFavorite ? `--active` : ``} button`}
               type="button"
               onClick={handleBookmarkClick}
             >
@@ -85,8 +84,8 @@ CardOffer.propTypes = {
     images: PropTypes.array,
     id: PropTypes.number,
     rating: PropTypes.number,
-    is_favorite: PropTypes.bool,
-    is_premium: PropTypes.bool,
+    isFavorite: PropTypes.bool,
+    isPremium: PropTypes.bool,
   }),
   onBookmarkClick: PropTypes.func,
 };

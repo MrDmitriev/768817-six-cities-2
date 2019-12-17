@@ -27,3 +27,29 @@ export const sortOffers = (offers, sortType) => {
 };
 
 export const findOfferById = (offers, id) => find(propEq(`id`, id))(offers);
+
+export const getOffersWithCamelCase = (offers) => {
+  let formatedOffers = [];
+  if (!offers) {
+    return formatedOffers;
+  }
+
+  offers.map((item) => {
+    const host = {
+      host: {
+        isPro: item.host.is_pro,
+        id: item.host.id,
+        name: item.host.name,
+        avatarUrl: item.host.avatar_url
+      }
+    };
+    const maxAdults = {maxAdults: item.max_adults};
+    const previewImage = {previewImage: item.preview_image};
+    const isFavorite = {isFavorite: item.is_favorite};
+    const isPremium = {isPremium: item.is_premium};
+    const newObj = Object.assign(item, isFavorite, isPremium, previewImage, maxAdults, host);
+    return formatedOffers.push(newObj);
+  });
+
+  return formatedOffers;
+};

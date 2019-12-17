@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {ratingTitles} from '../../constants/constants.js';
+import {RatingTitles} from '../../constants/constants.js';
 import {ActionCreator} from '../../reducers/index.js';
 import {getFormData, getIsSubmitDesabled} from '../../selectors/user.js';
 
@@ -32,7 +32,7 @@ export class ReviewForm extends PureComponent {
       >
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
-          {ratingTitles.map((item, i) => {
+          {RatingTitles.map((item, i) => {
             const value = 5 - i;
             const count = i + 1;
             const isChecked = Number(rating) === value;
