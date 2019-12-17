@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {requireAuthorization, setSubmitButtonState} from '../reducers/user.js';
 import {ResponseCodes} from '../constants/constants.js';
+import history from '../history/history.js';
 
 const createAPI = (dispatch) => {
   const api = axios.create({
@@ -19,7 +20,10 @@ const createAPI = (dispatch) => {
       dispatch(requireAuthorization(true));
     } else if (errStatus === ResponseCodes.BAD_REQUEST) {
       dispatch(setSubmitButtonState(true));
+    } else {
+      return history.push(`/error`);
     }
+
     return false;
   };
 

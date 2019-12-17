@@ -1,6 +1,4 @@
-import MockAdapter from 'axios-mock-adapter';
-import reducer, {loadOffers, loadFavoriteOffers, loadReviews} from '../data.js';
-import createAPI from '../../api/api.js';
+import reducer from '../data.js';
 
 const initialState = {
   offers: [],
@@ -31,66 +29,6 @@ describe(`reducer works correctly`, () => {
     const newState = reducer(initialState, action);
     const expectedState = Object.assign({}, initialState, {filteredOffers: [1, 2, 3]});
     expect(newState).toEqual(expectedState);
-  });
-
-  it(`should create a correct API call to a /hotels endPoint`, () => {
-    const dispatch = jest.fn();
-    const getState = jest.fn();
-
-    getState.mockReturnValue({user: {activeCity: `Amster`}});
-
-    const api = createAPI(dispatch);
-    const apiMock = new MockAdapter(api);
-    const offersLoader = loadOffers();
-
-    apiMock.onGet(`/hotels`).reply(200, [{city: {name: `aaa`}}]);
-
-    return offersLoader(dispatch, getState, api)
-      .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(3);
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: `SET_OFFERS`,
-          payload: [{city: {name: `aaa`}}],
-        });
-      });
-  });
-
-  it(`should load favorite offer`, () => {
-    const dispatch = jest.fn();
-
-    const api = createAPI(dispatch);
-    const apiMock = new MockAdapter(api);
-    const offersLoader = loadFavoriteOffers();
-
-    apiMock.onGet(`/favorite`).reply(200, [{city: {name: `aaa`}}]);
-
-    return offersLoader(dispatch, null, api)
-      .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: `SET_FAVORITE_OFFERS`,
-          payload: [{city: {name: `aaa`}}],
-        });
-      });
-  });
-
-  it(`should load reviews`, () => {
-    const dispatch = jest.fn();
-
-    const api = createAPI(dispatch);
-    const apiMock = new MockAdapter(api);
-    const reviewsLoader = loadReviews(1);
-
-    apiMock.onGet(`/comments/1`).reply(200, [{id: `1`}]);
-
-    return reviewsLoader(dispatch, null, api)
-      .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: `SET_REVIEWS`,
-          payload: [{id: `1`}],
-        });
-      });
   });
 
   it(`should set reviews by a given data`, () => {

@@ -104,7 +104,8 @@ export const loadReviews = (id) => (dispatch, getState, api) => {
       const newObj = Object.assign(item, user);
       return formatedReviews.push(newObj);
     });
-    return !isNil(response) ? dispatch(setReviews(response.data)) : [];
+
+    return !isNil(formatedReviews) ? dispatch(setReviews(formatedReviews)) : [];
   });
 };
 

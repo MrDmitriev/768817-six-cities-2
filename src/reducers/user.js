@@ -97,6 +97,9 @@ export const sendReview = () => (dispatch, getState, api) => {
     dispatch(setSubmitButtonState(false));
     dispatch(resetForm());
     dispatch(setReviews(formatedReviews));
+  }).catch((error) => {
+    history.push(`/error`);
+    return error;
   });
 };
 

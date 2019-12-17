@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import createAPI from '../../api/api.js';
 
-import reducer, {logIntoApp, checkAuthorization, sendReview} from '../user.js';
+import reducer, {logIntoApp, checkAuthorization} from '../user.js';
 
 const initialState = {
   activeCity: ``,
@@ -73,42 +73,6 @@ describe(`reducer works correctly`, () => {
         type: `SAVE_AUTH_RESPONSE`,
         payload: [{email: `aaa@bbb.cz`, id: 1}]
       });
-    });
-  });
-
-  it(`should send review with a given values`, () => {
-    const dispatch = jest.fn();
-    const getState = jest.fn();
-
-    const mockState = {
-      user: {
-        form: {email: `aaa@dd.cz`, password: `asdfa`},
-        activeOffer: 1
-      }
-    };
-    getState.mockReturnValue(mockState);
-    const api = createAPI(dispatch);
-    const apiMock = new MockAdapter(api);
-    const send = sendReview();
-
-    apiMock.onPost(`/comments/1`, {rating: `2`, comment: `aaa`}).reply(200, [
-      {
-        rating: 2,
-        comment: `aaa`,
-        date: `2019-05-08T14:13:56.569Z`,
-        user: {
-          id: 4,
-          isPro: false,
-          name: `Max`,
-          avatarUrl: `aaa`
-        },
-      }
-    ]);
-
-    return send(dispatch, getState, api)
-    .then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(3);
-      expect(dispatch).toHaveBeenNthCalledWith(3, {type: `SET_REVIEWS`});
     });
   });
 

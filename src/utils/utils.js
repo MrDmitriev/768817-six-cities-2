@@ -30,6 +30,9 @@ export const findOfferById = (offers, id) => find(propEq(`id`, id))(offers);
 
 export const getOffersWithCamelCase = (offers) => {
   let formatedOffers = [];
+  if (!offers) {
+    return formatedOffers;
+  }
 
   offers.map((item) => {
     const host = {

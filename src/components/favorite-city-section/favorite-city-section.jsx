@@ -16,7 +16,7 @@ export class FavoriteCitySection extends PureComponent {
           </div>
         </div>
         <div className="favorites__places">
-          {offers.map((item, i) => {
+          {offers && offers.map((item, i) => {
             return <CardOffer onBookmarkClick={onBookmarkClick} cardType={CardTypes.FAVORITES} offer={item} key={i}/>;
           })}
         </div>
