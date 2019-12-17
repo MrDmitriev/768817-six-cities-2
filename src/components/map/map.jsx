@@ -8,10 +8,6 @@ export class MapSection extends React.PureComponent {
     super(props);
   }
 
-  render() {
-    return (<div id="map" style={{height: 100 + `%`}}></div>);
-  }
-
   componentDidMount() {
     const {offers, city} = this.props;
     let lat = 0;
@@ -94,6 +90,10 @@ export class MapSection extends React.PureComponent {
     }
 
     this.markersLayer = leaflet.layerGroup(a).addTo(this.mapLeaf);
+  }
+
+  render() {
+    return (<div id="map" style={{height: 100 + `%`}}></div>);
   }
 }
 

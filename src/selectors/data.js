@@ -87,7 +87,10 @@ export const getClosestOffers = createSelector(
     (offers, offerId) => {
 
       let restructuredOffers = [];
-      let targetOffer;
+      let targetOffer = {
+        longitude: 0,
+        latitude: 0,
+      };
       let sortedByDistance;
       let sortedOffersByDistance = [];
       if (!isNil(offers)) {

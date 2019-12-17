@@ -9,18 +9,16 @@ import Favorites from '../favorites/favorites.jsx';
 import {FavoritesEmpty} from '../favorites-empty/favorites-empty.jsx';
 import {ErrorPage} from '../error-page/error-page.jsx';
 
-export class App extends React.PureComponent {
-  render() {
-    return (
-      <Switch>
-        <Route path={`/`} component={MainPage} exact />
-        <Route path={`/login`} component={login} exact />
-        <Route path={`/offer/:id`} component={OfferDetail} exact />
-        <Route path={`/offers-not-found`} component={MainEmpty} exact />
-        <Route path={`/favorites`} component={Favorites} exact />
-        <Route path={`/favorites-not-found`} component={FavoritesEmpty} exact />
-        <Route path={`/error`} component={ErrorPage} exact />
-      </Switch>
-    );
-  }
-}
+export const App = () => {
+  return (
+    <Switch>
+      <Route path={`/`} component={MainPage} exact />
+      <Route path={`/login`} component={login} exact />
+      <Route path={`/offer/:id`} component={OfferDetail} exact />
+      <Route path={`/offers-not-found`} component={MainEmpty} exact />
+      <Route path={`/favorites`} component={Favorites} exact />
+      <Route path={`/favorites-not-found`} component={FavoritesEmpty} exact />
+      <Route path={`/error`} component={ErrorPage} exact />
+    </Switch>
+  );
+};

@@ -2,6 +2,16 @@ export const RatingTitles = [`perfect`, `good`, `not bad`, `badly`, `terribly`];
 export const FIRST_CLOSEST_OFFER = 1;
 export const NUMBER_CLOSEST_OFFERS = 3;
 export const LAST_CLOSEST_OFFER = FIRST_CLOSEST_OFFER + NUMBER_CLOSEST_OFFERS;
+export const MAX_RATING_VALUE = 5;
+export const MAX_PERCENT = 100;
+
+export const DateCutValues = {
+  START_YEAR: 0,
+  END_YEAR: 4,
+  START_MONTH: 5,
+  END_MONTH: 7
+};
+
 export const CardTypes = {
   CITIES: `cities`,
   NEAR_PLACES: `near-places`,

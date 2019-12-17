@@ -12,6 +12,27 @@ import history from '../../history/history.js';
 import {getIsAuthRequired} from '../../selectors/user.js';
 
 export class Favorites extends PureComponent {
+  componentDidMount() {
+    const {checkAuthorization, loadFavoriteOffers, isAuthRequired} = this.props;
+    checkAuthorization();
+    loadFavoriteOffers();
+    return isAuthRequired && history.push(`/login`);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {loadFavoriteOffers, isAuthRequired, favoriteOffers} = this.props;
+
+    if (!isNil(favoriteOffers) && isEmpty(favoriteOffers)) {
+      history.push(`/favorites-not-found`);
+    }
+
+    if (prevProps.isAuthRequired !== this.props.isAuthRequired) {
+      return isAuthRequired ? history.push(`/login`) : loadFavoriteOffers();
+    }
+
+    return null;
+  }
+
   render() {
     const {favoriteCities, favoriteOffers, addToFavorite} = this.props;
     return (
@@ -57,27 +78,6 @@ export class Favorites extends PureComponent {
         </div>
       </>
     );
-  }
-
-  componentDidMount() {
-    const {checkAuthorization, loadFavoriteOffers, isAuthRequired} = this.props;
-    checkAuthorization();
-    loadFavoriteOffers();
-    return isAuthRequired && history.push(`/login`);
-  }
-
-  componentDidUpdate(prevProps) {
-    const {loadFavoriteOffers, isAuthRequired, favoriteOffers} = this.props;
-
-    if (!isNil(favoriteOffers) && isEmpty(favoriteOffers)) {
-      history.push(`/favorites-not-found`);
-    }
-
-    if (prevProps.isAuthRequired !== this.props.isAuthRequired) {
-      return isAuthRequired ? history.push(`/login`) : loadFavoriteOffers();
-    }
-
-    return null;
   }
 }
 

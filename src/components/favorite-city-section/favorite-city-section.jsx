@@ -1,29 +1,28 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {CardTypes} from '../../constants/constants.js';
 import {CardOffer} from '../card-offer/card-offer.jsx';
 
-export class FavoriteCitySection extends PureComponent {
-  render() {
-    const {city, offers, onBookmarkClick} = this.props;
-    return (
-      <li className="favorites__locations-items">
-        <div className="favorites__locations locations locations--current">
-          <div className="locations__item">
-            <a className="locations__item-link" href="#">
-              <span>{city}</span>
-            </a>
-          </div>
+export const FavoriteCitySection = (props) => {
+  const {city, offers, onBookmarkClick} = props;
+
+  return (
+    <li className="favorites__locations-items">
+      <div className="favorites__locations locations locations--current">
+        <div className="locations__item">
+          <a className="locations__item-link" href="#">
+            <span>{city}</span>
+          </a>
         </div>
-        <div className="favorites__places">
-          {offers && offers.map((item, i) => {
-            return <CardOffer onBookmarkClick={onBookmarkClick} cardType={CardTypes.FAVORITES} offer={item} key={i}/>;
-          })}
-        </div>
-      </li>
-    );
-  }
-}
+      </div>
+      <div className="favorites__places">
+        {offers && offers.map((item, i) => {
+          return <CardOffer onBookmarkClick={onBookmarkClick} cardType={CardTypes.FAVORITES} offer={item} key={i}/>;
+        })}
+      </div>
+    </li>
+  );
+};
 
 FavoriteCitySection.propTypes = {
   city: PropTypes.string,

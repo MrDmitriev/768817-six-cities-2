@@ -20,6 +20,13 @@ export class MainPage extends React.PureComponent {
     super(props);
   }
 
+  componentDidMount() {
+    const {loadOffersList, setDefaultSettings, checkAuthorization} = this.props;
+    checkAuthorization();
+    loadOffersList();
+    setDefaultSettings();
+  }
+
   render() {
     const {filteredOffers, activeCity, hoveredOfferId} = this.props;
     const city = !isEmpty(filteredOffers) ? filteredOffers[0].city : {};
@@ -89,12 +96,6 @@ export class MainPage extends React.PureComponent {
     );
   }
 
-  componentDidMount() {
-    const {loadOffersList, setDefaultSettings, checkAuthorization} = this.props;
-    checkAuthorization();
-    loadOffersList();
-    setDefaultSettings();
-  }
 }
 
 MainPage.propTypes = {

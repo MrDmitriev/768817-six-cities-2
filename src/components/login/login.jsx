@@ -10,6 +10,21 @@ import history from '../../history/history.js';
 import SignIn from '../sign-in/sign-in.jsx';
 
 export class Login extends PureComponent {
+  componentDidMount() {
+    const {isAuthRequired, checkAuthorization} = this.props;
+    checkAuthorization();
+    return isAuthRequired ? true : history.push(`/`);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {isAuthRequired} = this.props;
+    if (prevProps.isAuthRequired !== this.props.isAuthRequired) {
+      return isAuthRequired ? true : history.push(`/`);
+    }
+
+    return true;
+  }
+
   render() {
     const handleInputChange = (e) => {
       const {updateFieldValue} = this.props;
@@ -110,21 +125,6 @@ export class Login extends PureComponent {
         </div>
       </>
     );
-  }
-
-  componentDidMount() {
-    const {isAuthRequired, checkAuthorization} = this.props;
-    checkAuthorization();
-    return isAuthRequired ? true : history.push(`/`);
-  }
-
-  componentDidUpdate(prevProps) {
-    const {isAuthRequired} = this.props;
-    if (prevProps.isAuthRequired !== this.props.isAuthRequired) {
-      return isAuthRequired ? true : history.push(`/`);
-    }
-
-    return true;
   }
 }
 

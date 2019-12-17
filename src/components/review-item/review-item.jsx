@@ -1,41 +1,40 @@
 import {slice} from 'ramda';
-import React, {PureComponent} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import {Months} from '../../constants/constants.js';
+import {Months, DateCutValues} from '../../constants/constants.js';
+import {convertRatingToPercent} from '../../utils/utils.js';
 
-export class ReviewItem extends PureComponent {
-  render() {
-    const {review} = this.props;
-    const ratingPercent = (Math.round(review.rating) / 5) * 100;
-    const year = slice(0, 4, review.date);
-    const month = slice(5, 7, review.date);
-    const monthName = Months[month - 1];
-    return (
-      <li className="reviews__item">
-        <div className="reviews__user user">
-          <div className="reviews__avatar-wrapper user__avatar-wrapper">
-            <img className="reviews__avatar user__avatar" src={review.user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
-          </div>
-          <span className="reviews__user-name">
-            {review.user.name}
-          </span>
+export const ReviewItem = (props) => {
+  const {review} = props;
+  const year = slice(DateCutValues.START_YEAR, DateCutValues.END_YEAR, review.date);
+  const month = slice(DateCutValues.START_MONTH, DateCutValues.END_MONTH, review.date);
+  const monthName = Months[month - 1];
+
+  return (
+    <li className="reviews__item">
+      <div className="reviews__user user">
+        <div className="reviews__avatar-wrapper user__avatar-wrapper">
+          <img className="reviews__avatar user__avatar" src={review.user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
         </div>
-        <div className="reviews__info">
-          <div className="reviews__rating rating">
-            <div className="reviews__stars rating__stars">
-              <span style={{width: `${ratingPercent}%`}}></span>
-              <span className="visually-hidden">Rating</span>
-            </div>
+        <span className="reviews__user-name">
+          {review.user.name}
+        </span>
+      </div>
+      <div className="reviews__info">
+        <div className="reviews__rating rating">
+          <div className="reviews__stars rating__stars">
+            <span style={{width: `${convertRatingToPercent(review.rating)}%`}}></span>
+            <span className="visually-hidden">Rating</span>
           </div>
-          <p className="reviews__text">
-            {review.comment}
-          </p>
-          <time className="reviews__time" dateTime={review.date}>{`${monthName} ${year}`}</time>
         </div>
-      </li>
-    );
-  }
-}
+        <p className="reviews__text">
+          {review.comment}
+        </p>
+        <time className="reviews__time" dateTime={review.date}>{`${monthName} ${year}`}</time>
+      </div>
+    </li>
+  );
+};
 
 ReviewItem.propTypes = {
   review: PropTypes.shape({

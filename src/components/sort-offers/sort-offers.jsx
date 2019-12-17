@@ -6,57 +6,55 @@ import {SortOptions, SortTypes, SortTypeLabels} from '../../constants/constants.
 import {getActiveSortType, getIsSortOpen} from '../../selectors/sort.js';
 import {ActionCreator} from '../../reducers/index.js';
 
-export class SortOffers extends React.PureComponent {
-  render() {
-    const {activeSortType, isOpen} = this.props;
+export const SortOffers = (props) => {
+  const {activeSortType, isOpen} = props;
 
-    const handleDocumentClick = () => {
-      this.props.toggleSort();
-      document.removeEventListener(`click`, handleDocumentClick);
-    };
+  const handleDocumentClick = () => {
+    props.toggleSort();
+    document.removeEventListener(`click`, handleDocumentClick);
+  };
 
-    const handleSortClick = () => {
-      this.props.toggleSort();
-      document.addEventListener(`click`, handleDocumentClick);
-    };
+  const handleSortClick = () => {
+    props.toggleSort();
+    document.addEventListener(`click`, handleDocumentClick);
+  };
 
-    const handleSortTypeClick = (e) => {
-      const {setSortType, sortFilteredOffers} = this.props;
-      setSortType(e.currentTarget.id);
-      sortFilteredOffers();
-    };
+  const handleSortTypeClick = (e) => {
+    const {setSortType, sortFilteredOffers} = props;
+    setSortType(e.currentTarget.id);
+    sortFilteredOffers();
+  };
 
-    return (
-      <form className="places__sorting" action="#" method="get">
-        <span className="places__sorting-caption">Sort by</span>
-        <span onClick={handleSortClick} className="places__sorting-type" tabIndex="0">
-          {SortTypeLabels[activeSortType]}
-          <svg className="places__sorting-arrow" width="7" height="4">
-            <use xlinkHref="#icon-arrow-select"></use>
-          </svg>
-        </span>
-        <ul className={`places__options places__options--custom ${isOpen ? `places__options--opened` : ``}`}>
-          {SortOptions.map((item, i) => {
-            const SortTypesValues = Object.values(SortTypes);
-            const currentSortType = SortTypesValues[i];
-            const isActive = activeSortType === currentSortType;
-            return (
-              <li
-                className={`places__option ${isActive ? `places__option--active` : ``}`}
-                tabIndex={i}
-                key={item}
-                id={currentSortType}
-                onClick={handleSortTypeClick}
-              >
-                {item}
-              </li>
-            );
-          })}
-        </ul>
-      </form>
-    );
-  }
-}
+  return (
+    <form className="places__sorting" action="#" method="get">
+      <span className="places__sorting-caption">Sort by</span>
+      <span onClick={handleSortClick} className="places__sorting-type" tabIndex="0">
+        {SortTypeLabels[activeSortType]}
+        <svg className="places__sorting-arrow" width="7" height="4">
+          <use xlinkHref="#icon-arrow-select"></use>
+        </svg>
+      </span>
+      <ul className={`places__options places__options--custom ${isOpen ? `places__options--opened` : ``}`}>
+        {SortOptions.map((item, i) => {
+          const SortTypesValues = Object.values(SortTypes);
+          const currentSortType = SortTypesValues[i];
+          const isActive = activeSortType === currentSortType;
+          return (
+            <li
+              className={`places__option ${isActive ? `places__option--active` : ``}`}
+              tabIndex={i}
+              key={item}
+              id={currentSortType}
+              onClick={handleSortTypeClick}
+            >
+              {item}
+            </li>
+          );
+        })}
+      </ul>
+    </form>
+  );
+};
 
 SortOffers.propTypes = {
   activeSortType: PropTypes.string,

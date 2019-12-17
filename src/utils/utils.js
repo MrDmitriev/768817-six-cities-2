@@ -1,6 +1,6 @@
 import {sort, ascend, descend, prop, propEq, find} from 'ramda';
 
-import {SortTypes} from "../constants/constants.js";
+import {SortTypes, MAX_RATING_VALUE, MAX_PERCENT} from "../constants/constants.js";
 
 export const filterOffers = (activeCity, offers) => {
   return offers.filter((item) => {
@@ -52,4 +52,8 @@ export const getOffersWithCamelCase = (offers) => {
   });
 
   return formatedOffers;
+};
+
+export const convertRatingToPercent = (ratingNumber) => {
+  return (Math.round(ratingNumber) / MAX_RATING_VALUE) * MAX_PERCENT;
 };

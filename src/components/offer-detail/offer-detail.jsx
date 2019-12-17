@@ -16,11 +16,35 @@ import {CardOffer} from '../card-offer/card-offer.jsx';
 import ReviewForm from '../review-form/review-form.jsx';
 import {getIsAuthRequired} from '../../selectors/user.js';
 import SignIn from '../sign-in/sign-in.jsx';
+import {convertRatingToPercent} from '../../utils/utils.js';
 
 export class OfferDetail extends PureComponent {
+  componentDidMount() {
+    const {loadOffersList, match, loadOfferReviews, setActiveOffer, setDefaultSettings, checkAuthorization} = this.props;
+    checkAuthorization();
+    setDefaultSettings();
+    loadOfferReviews(match.params.id);
+    setActiveOffer(Number(match.params.id));
+    loadOffersList(Number(match.params.id));
+  }
+
+  componentDidUpdate(prevProps) {
+    const {loadOffersList, match, loadOfferReviews, setActiveOffer, setDefaultSettings} = this.props;
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      setDefaultSettings();
+      loadOfferReviews(match.params.id);
+      setActiveOffer(Number(match.params.id));
+      loadOffersList(Number(match.params.id));
+    }
+  }
+
+  componentWillUnmount() {
+    const {setActiveOffer} = this.props;
+    setActiveOffer(null);
+  }
+
   render() {
     const {offer, reviews, reviewList, closestOffers, filteredOffers, isAuthRequired} = this.props;
-    const ratingPercent = offer && (Math.round(offer.rating) / 5) * 100;
 
     const handleBookmarkClick = () => {
       const {ADD, REMOVE} = BookmarkActions;
@@ -102,7 +126,7 @@ export class OfferDetail extends PureComponent {
                   </div>
                   <div className="property__rating rating">
                     <div className="property__stars rating__stars">
-                      <span style={{width: `${ratingPercent}%`}}></span>
+                      <span style={{width: `${offer && convertRatingToPercent(offer.rating)}%`}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                     <span className="property__rating-value rating__value">{Math.round(offer.rating)}</span>
@@ -192,29 +216,6 @@ export class OfferDetail extends PureComponent {
     ) : <div />;
   }
 
-  componentDidMount() {
-    const {loadOffersList, match, loadOfferReviews, setActiveOffer, setDefaultSettings, checkAuthorization} = this.props;
-    checkAuthorization();
-    setDefaultSettings();
-    loadOfferReviews(match.params.id);
-    setActiveOffer(Number(match.params.id));
-    loadOffersList(Number(match.params.id));
-  }
-
-  componentDidUpdate(prevProps) {
-    const {loadOffersList, match, loadOfferReviews, setActiveOffer, setDefaultSettings} = this.props;
-    if (prevProps.match.params.id !== this.props.match.params.id) {
-      setDefaultSettings();
-      loadOfferReviews(match.params.id);
-      setActiveOffer(Number(match.params.id));
-      loadOffersList(Number(match.params.id));
-    }
-  }
-
-  componentWillUnmount() {
-    const {setActiveOffer} = this.props;
-    setActiveOffer(null);
-  }
 }
 
 OfferDetail.propTypes = {

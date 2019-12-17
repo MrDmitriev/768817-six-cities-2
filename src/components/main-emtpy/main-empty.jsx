@@ -7,6 +7,10 @@ import SignIn from '../sign-in/sign-in.jsx';
 import {ActionCreator} from '../../reducers/index.js';
 
 export class MainEmpty extends PureComponent {
+  componentDidMount() {
+    return this.props.checkAuthorization();
+  }
+
   render() {
     return (
       <>
@@ -87,9 +91,6 @@ export class MainEmpty extends PureComponent {
     );
   }
 
-  componentDidMount() {
-    return this.props.checkAuthorization();
-  }
 }
 
 MainEmpty.propTypes = {
