@@ -23,7 +23,7 @@ const init = () => {
 
   ReactDOM.render(
       <Provider store={store}>
-        <Router history={history}>
+        <Router history={history} basement>
           <App />
         </Router>
       </Provider>,

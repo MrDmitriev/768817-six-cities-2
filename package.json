@@ -10,7 +10,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d public",
     "start": "webpack-dev-server",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "serve": "serve public/"
 
   },
   "devDependencies": {
@@ -29,7 +30,8 @@
     "react-test-renderer": "16.10.2",
     "webpack": "4.41.2",
     "webpack-cli": "3.3.9",
-    "webpack-dev-server": "3.8.2"
+    "webpack-dev-server": "3.8.2",
+    "serve": "11.2.0"
   },
   "engines": {
     "node": "10"
