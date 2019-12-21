@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "description": "Личный проект «Шесть городов» от HTML Academy",
+  "homepage": "https://mrdmitriev.github.io/six-cities/",
   "scripts": {
     "eslint": "eslint --ext .jsx --ext .js src/",
     "test": "npm run eslint && jest --no-cache",
-    "deploy": "gh-pages -b master -d build",
-    "build": "webpack --mode production",
-    "start": "webpack-dev-server"    
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d public",
+    "start": "webpack-dev-server",
+    "build": "webpack --mode production"
+
   },
   "devDependencies": {
     "@babel/core": "7.6.4",
