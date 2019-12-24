@@ -1,19 +1,20 @@
 {
-  "name": "six-cities",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Личный проект «Шесть городов» от HTML Academy",
-  "homepage": "https://mrdmitriev.github.io/six-cities/",
-  "scripts": {
-    "eslint": "eslint --ext .jsx --ext .js src/",
-    "test": "npm run eslint && jest --no-cache",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d public",
-    "start": "webpack-dev-server",
-    "build": "webpack --mode production",
-    "serve": "serve public/"
-
+  "dependencies": {
+    "axios": "0.19.0",
+    "leaflet": "1.5.1",
+    "prop-types": "15.7.2",
+    "ramda": "0.26.1",
+    "react": "16.10.2",
+    "react-dom": "16.10.2",
+    "react-redux": "7.1.3",
+    "react-router-dom": "5.1.2",
+    "recompose": "0.30.0",
+    "redux": "4.0.4",
+    "redux-thunk": "2.3.0",
+    "reselect": "4.0.0",
+    "sort-by-distance": "1.1.0"
   },
+  "description": "Личный проект «Шесть городов» от HTML Academy",
   "devDependencies": {
     "@babel/core": "7.6.4",
     "@babel/preset-env": "7.6.3",
@@ -30,26 +31,17 @@
     "react-test-renderer": "16.10.2",
     "webpack": "4.41.2",
     "webpack-cli": "3.3.9",
-    "webpack-dev-server": "3.8.2",
-    "serve": "11.2.0"
+    "webpack-dev-server": "3.8.2"
   },
   "engines": {
     "node": "10"
   },
-  "dependencies": {
-    "axios": "0.19.0",
-    "gh-pages": "^2.1.1",
-    "leaflet": "1.5.1",
-    "prop-types": "15.7.2",
-    "ramda": "0.26.1",
-    "react": "16.10.2",
-    "react-dom": "16.10.2",
-    "react-redux": "7.1.3",
-    "react-router-dom": "5.1.2",
-    "recompose": "0.30.0",
-    "redux": "4.0.4",
-    "redux-thunk": "2.3.0",
-    "reselect": "4.0.0",
-    "sort-by-distance": "1.1.0"
-  }
+  "private": true,
+  "scripts": {
+    "build": "webpack --mode production",
+    "eslint": "eslint --ext .jsx --ext .js src/",
+    "start": "webpack-dev-server",
+    "test": "npm run eslint \u0026\u0026 jest --no-cache"
+  },
+  "version": "1.0.0"
 }

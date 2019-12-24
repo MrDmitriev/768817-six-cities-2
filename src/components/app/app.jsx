@@ -12,7 +12,7 @@ import {ErrorPage} from '../error-page/error-page.jsx';
 export const App = () => {
   return (
     <Switch>
-      <Route path={`/six-cities`} component={MainPage} exact />
+      <Route path={`/`} component={MainPage} exact />
       <Route path={`/login`} component={login} exact />
       <Route path={`/offer/:id`} component={OfferDetail} exact />
       <Route path={`/offers-not-found`} component={MainEmpty} exact />
